@@ -1,0 +1,205 @@
+/* Shared layouts for interior pages. */
+
+.intro {
+  padding-block: var(--space-xl) var(--space-l);
+  text-align: center;
+}
+
+.intro header {
+  margin-bottom: 0;
+}
+
+.lead {
+  max-width: 38rem;
+  margin: var(--space-m) auto 0;
+  font-size: 1.1rem;
+  color: var(--color-muted);
+}
+
+/* Shared statement / stacks ---------------------------------------- */
+
+.statement {
+  font-family: var(--font-serif);
+  font-size: var(--step-2);
+  line-height: 1.4;
+  color: var(--navy);
+  text-align: center;
+}
+
+.centerStack {
+  display: grid;
+  gap: var(--space-m);
+  justify-items: center;
+  text-align: center;
+}
+
+/* Podcast ---------------------------------------------------------- */
+
+.episodes {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 20rem), 1fr));
+  gap: var(--space-l);
+}
+
+.videoWrap {
+  width: min(100%, 56rem);
+  margin-inline: auto;
+}
+
+.caption {
+  margin-top: var(--space-s);
+  text-align: center;
+  font-size: 0.9rem;
+  color: var(--color-muted);
+}
+
+/* Newsletter ------------------------------------------------------- */
+
+.receives {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: var(--space-l);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+}
+
+.receives li {
+  display: grid;
+  gap: var(--space-xs);
+  padding-top: var(--space-m);
+  border-top: 1px solid var(--rose-mauve);
+}
+
+.receives h3 {
+  font-size: var(--step-2);
+}
+
+.receives p {
+  color: var(--color-muted);
+}
+
+/* Circle ----------------------------------------------------------- */
+
+.circleHero {
+  position: relative;
+  overflow: hidden;
+  padding-block: var(--space-2xl);
+  text-align: center;
+  background:
+    radial-gradient(50% 70% at 15% 20%, rgb(244 201 216 / 0.55), transparent 70%),
+    radial-gradient(50% 70% at 85% 80%, rgb(199 183 217 / 0.6), transparent 70%),
+    var(--cream);
+}
+
+.circleHero::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: min(80vw, 38rem);
+  aspect-ratio: 1;
+  translate: -50% -50%;
+  border: 1px solid rgb(10 26 47 / 0.12);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.circleHero > div {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  gap: var(--space-m);
+}
+
+.circleHero h1 {
+  font-size: var(--step-4);
+  font-weight: 400;
+  max-width: 14ch;
+}
+
+.themes {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: var(--space-m);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+}
+
+.theme {
+  padding: var(--space-l) var(--space-m);
+  background: var(--surface);
+  border-radius: var(--radius-l);
+  display: grid;
+  gap: var(--space-xs);
+}
+
+.theme:nth-child(3n + 1) {
+  background: var(--tint-blush);
+}
+.theme:nth-child(3n + 2) {
+  background: var(--tint-lavender);
+}
+.theme:nth-child(3n + 3) {
+  background: var(--tint-mist);
+}
+
+.themeMonth {
+  font-size: 0.75rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--slate-blue);
+}
+
+.theme h3 {
+  font-size: var(--step-2);
+}
+
+.benefits {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: var(--space-l) var(--space-xl);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+}
+
+.benefits li {
+  display: grid;
+  gap: var(--space-xs);
+}
+
+.benefits h3 {
+  font-size: var(--step-1);
+  font-weight: 600;
+  color: var(--cream);
+}
+
+.benefits p {
+  color: rgb(247 244 239 / 0.8);
+}
+
+.emptyNote {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: var(--step-1);
+  text-align: center;
+  color: inherit;
+  opacity: 0.85;
+}
+
+.narrow {
+  width: min(100% - 2 * var(--gutter), 52rem);
+  margin-inline: auto;
+}
+
+/* 404 -------------------------------------------------------------- */
+
+.notFound {
+  display: grid;
+  justify-items: center;
+  gap: var(--space-m);
+  text-align: center;
+  padding-block: var(--space-2xl);
+}

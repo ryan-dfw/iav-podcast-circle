@@ -1,0 +1,24 @@
+.wrap {
+  display: grid;
+  justify-items: center;
+  gap: 0.45rem;
+}
+
+
+.note {
+  padding: 0.1em 0.65em;
+  border: 1px dashed var(--rose-mauve);
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #9a5470;
+  transition: background-color 0.2s var(--ease);
+}
+
+.note[data-pressed='true'] {
+  background: var(--tint-blush);
+  text-transform: none;
+  letter-spacing: 0.02em;
+}

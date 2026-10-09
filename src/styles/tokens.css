@@ -1,0 +1,66 @@
+/*
+ * Design tokens — taken from the client's palette (notes/ai-img02.png) and
+ * typography direction in her handoff. Change brand values here only.
+ */
+:root {
+  /* Primary */
+  --navy: #0a1a2f; /* Deep Midnight Navy */
+  --blush: #f4c9d8; /* Soft Blush Pink */
+  --lavender: #c7b7d9; /* Muted Lavender */
+  /* Secondary */
+  --gray-blue: #8fa6c9; /* Cool Gray-Blue */
+  --cream: #f7f4ef; /* Warm Cream */
+  /* Accent */
+  --rose-mauve: #d9a6b8;
+  --slate-blue: #3a4f6b;
+  /* Text */
+  --charcoal: #1a1a1a;
+  --soft-gray: #e6e6e6;
+
+  /* Soft color blocks (tints of the palette over cream) */
+  --tint-blush: #f9e8ee;
+  --tint-lavender: #ece6f2;
+  --tint-mist: #e5ebf3;
+  --tint-cream: #efeae2;
+  --surface: #fbfaf7;
+
+  /* Semantic */
+  --color-bg: var(--cream);
+  --color-text: var(--charcoal);
+  --color-heading: var(--navy);
+  --color-muted: #4a5568;
+  --color-rule: #ddd6cc;
+  --color-focus: var(--slate-blue);
+
+  /* Type */
+  --font-serif: 'Cormorant Garamond', 'Cormorant', Georgia, 'Times New Roman', serif;
+  --font-sans: 'Inter Variable', 'Inter', 'Lato', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  --step--1: clamp(0.84rem, 0.82rem + 0.1vw, 0.9rem);
+  --step-0: clamp(1rem, 0.97rem + 0.15vw, 1.0625rem);
+  --step-1: clamp(1.25rem, 1.17rem + 0.4vw, 1.5rem);
+  --step-2: clamp(1.6rem, 1.45rem + 0.75vw, 2.1rem);
+  --step-3: clamp(2rem, 1.7rem + 1.5vw, 3rem);
+  --step-4: clamp(2.6rem, 2rem + 3vw, 4.5rem);
+
+  /* Space — generous, editorial */
+  --space-2xs: 0.25rem;
+  --space-xs: 0.5rem;
+  --space-s: 1rem;
+  --space-m: 1.5rem;
+  --space-l: 2.5rem;
+  --space-xl: clamp(3rem, 2.4rem + 3vw, 5rem);
+  --space-2xl: clamp(4.5rem, 3.5rem + 5vw, 8rem);
+
+  --measure: 42rem;
+  --container: 72rem;
+  --gutter: clamp(1rem, 0.6rem + 2vw, 2.5rem);
+
+  /* Overwritten at runtime with the sticky header's measured height. */
+  --header-h: 4rem;
+
+  --radius: 4px;
+  --radius-l: 10px;
+  --shadow-soft: 0 1px 2px rgb(10 26 47 / 0.04), 0 8px 24px rgb(10 26 47 / 0.06);
+  --ease: cubic-bezier(0.2, 0.6, 0.2, 1);
+}

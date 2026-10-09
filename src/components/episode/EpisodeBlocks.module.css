@@ -1,0 +1,70 @@
+.section {
+  display: grid;
+  gap: var(--space-m);
+  padding-block: var(--space-l);
+  border-top: 1px solid var(--color-rule);
+}
+
+.heading {
+  font-size: var(--step-2);
+  font-weight: 600;
+}
+
+.paragraph {
+  font-size: 1.0625rem;
+  line-height: 1.8;
+}
+
+.quote {
+  margin: var(--space-xs) 0;
+  padding: var(--space-m) var(--space-l);
+  border-radius: var(--radius-l);
+  border-left: 3px solid var(--rose-mauve);
+}
+
+.quote blockquote {
+  margin: 0;
+}
+
+.quote p {
+  font-family: var(--font-serif);
+  font-size: var(--step-1);
+  font-style: italic;
+  line-height: 1.45;
+  color: var(--navy);
+}
+
+.quote figcaption {
+  margin-top: var(--space-s);
+  font-size: 0.85rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--slate-blue);
+}
+
+.cream {
+  background: var(--tint-cream);
+}
+.blush {
+  background: var(--tint-blush);
+}
+.lavender {
+  background: var(--tint-lavender);
+  border-left-color: var(--lavender);
+}
+.mist {
+  background: var(--tint-mist);
+  border-left-color: var(--gray-blue);
+}
+
+.note {
+  padding-left: var(--space-m);
+  border-left: 1px solid var(--navy);
+  color: var(--navy);
+}
+
+@media (max-width: 30rem) {
+  .quote {
+    padding: var(--space-m);
+  }
+}

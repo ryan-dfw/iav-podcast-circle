@@ -1,0 +1,65 @@
+/**
+ * Site identity and contact details.
+ *
+ * Only facts the client has actually supplied belong here. Anything unknown is
+ * `undefined`, and the UI simply omits it — please don't fill these in with
+ * guesses.
+ */
+
+export interface SocialLink {
+  id: 'youtube' | 'spotify' | 'instagram' | 'linktree';
+  label: string;
+  url: string;
+  /** Set while the destination isn't working yet; renders struck through, unlinked. */
+  pending?: boolean;
+}
+
+const socials: Array<Omit<SocialLink, 'url'> & { url?: string }> = [
+  // Source: client email signature ("YouTube, Spotify & Linktree").
+  // Pending: this URL currently doesn't resolve.
+  { id: 'linktree', label: 'Linktree', url: 'https://linktr.ee/letstalk_iavpodcastcircle', pending: true },
+  // TODO(client): channel / show URLs were not provided — add them to show the icons.
+  { id: 'youtube', label: 'YouTube', url: undefined },
+  { id: 'spotify', label: 'Spotify', url: undefined },
+  { id: 'instagram', label: 'Instagram', url: undefined },
+];
+
+export const site = {
+  name: 'IAV Podcast Circle',
+  tagline: 'Talent Amplified',
+  subtagline: 'Where raw stories become legacy.',
+  /** Production origin, used for canonical/OG URLs. */
+  url: 'https://iavpodcastcircle.com',
+  defaultDescription:
+    'IAV Podcast Circle captures talented people in their raw, human state before the world meets them — preserving a human capsule through intimate podcast conversations.',
+
+  host: {
+    name: 'Isha Vazquez',
+    roles: ['Talent Amplifier', 'Podcast host & nutrition coach', 'Certified in neuropsychology'],
+    // From the handoff ("Professional bio (CNC, CNP)"). Confirm exact wording with the client.
+    credentials: 'CNC, CNP',
+    portrait: { src: '/images/isha-vazquez.jpg', alt: 'Portrait of Isha Vazquez', width: 240, height: 240 },
+    signatureLine:
+      'Discovering talented humans and preserving their gifts in a living time capsule, one conversation at a time.',
+  },
+
+  podcast: {
+    /**
+     * The Episode 01 page calls the show "Let’s Talk For a Bit"; the client's
+     * email signature says "Let’s Talk with Isha". Confirm which is current.
+     */
+    showName: 'Let’s Talk For a Bit',
+  },
+
+  contact: {
+    email: 'iavpodcastcircle@gmail.com',
+  },
+
+  socials: socials.filter((s): s is SocialLink => Boolean(s.url)),
+
+} as const;
+
+export function mailto(subject?: string): string {
+  const base = `mailto:${site.contact.email}`;
+  return subject ? `${base}?subject=${encodeURIComponent(subject)}` : base;
+}

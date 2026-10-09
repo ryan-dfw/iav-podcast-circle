@@ -1,0 +1,81 @@
+/* Hero: deep navy night sky from the client's mockup — "before the world meets them". */
+.hero {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  color: var(--cream);
+  /* Blue-violet night sky with a soft central glow, per the client mockup. */
+  background:
+    radial-gradient(ellipse 45% 55% at 50% 50%, rgb(176 172 220 / 0.38), transparent 72%),
+    radial-gradient(ellipse 70% 90% at 50% 50%, rgb(120 120 178 / 0.45), transparent 75%),
+    radial-gradient(ellipse 120% 100% at 50% 50%, #545a8c 0%, #3e4774 40%, #2a3456 72%, #1b2540 100%);
+}
+
+/* Soft vignette at the top and bottom edges */
+.hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(180deg, rgb(10 26 47 / 0.35), transparent 25%, transparent 78%, rgb(10 26 47 / 0.25));
+  pointer-events: none;
+}
+
+.heroInner {
+  display: grid;
+  justify-items: center;
+  gap: var(--space-s);
+  padding-block: clamp(5rem, 4rem + 8vw, 10rem);
+  text-align: center;
+}
+
+.heroEyebrow {
+  font-size: var(--step--1);
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--blush);
+}
+
+.heroTitle {
+  font-size: clamp(3rem, 2rem + 5vw, 6rem);
+  font-weight: 400;
+  color: var(--cream);
+  line-height: 1;
+}
+
+.heroSub {
+  font-family: var(--font-serif);
+  font-size: var(--step-2);
+  font-style: italic;
+  color: rgb(247 244 239 / 0.92);
+}
+
+.ctas {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-s);
+  margin-top: var(--space-m);
+}
+
+/* Navy-on-navy needs a hairline to read as a button. */
+.heroPrimary {
+  border-color: rgb(247 244 239 / 0.35);
+}
+
+.guests {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 20rem));
+  justify-content: center;
+  gap: var(--space-l);
+}
+
+
+/* Keep the guests → newsletter transition compact. */
+.guestsSection {
+  padding-bottom: var(--space-l);
+}
+
+.newsletterSection {
+  padding-block: var(--space-l);
+}

@@ -1,0 +1,45 @@
+.sky {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.star {
+  position: absolute;
+  border-radius: 50%;
+  background: #fff;
+  opacity: var(--o);
+  box-shadow: 0 0 4px rgb(255 255 255 / 0.6);
+}
+
+.twinkle {
+  animation: twinkle 5s ease-in-out infinite;
+}
+
+.sparkle {
+  position: absolute;
+  translate: -50% -50%;
+  fill: #fff;
+  opacity: 0.85;
+  filter: drop-shadow(0 0 6px rgb(255 255 255 / 0.7));
+  animation: twinkle 7s ease-in-out infinite;
+}
+
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: var(--o, 0.85);
+  }
+  50% {
+    opacity: 0.15;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .twinkle,
+  .sparkle {
+    animation: none;
+  }
+}

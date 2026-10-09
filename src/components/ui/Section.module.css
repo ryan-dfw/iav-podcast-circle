@@ -1,0 +1,72 @@
+.section {
+  padding-block: var(--space-2xl);
+}
+
+.tight {
+  padding-block: var(--space-xl);
+}
+
+.surface {
+  background: var(--surface);
+}
+.blush {
+  background: var(--tint-blush);
+}
+.lavender {
+  background: var(--tint-lavender);
+}
+.mist {
+  background: var(--tint-mist);
+}
+.navy {
+  background: var(--navy);
+  color: var(--cream);
+}
+.navy h2,
+.navy h3 {
+  color: var(--cream);
+}
+
+.heading {
+  display: grid;
+  gap: var(--space-s);
+  margin-bottom: var(--space-l);
+}
+
+.center {
+  text-align: center;
+  justify-items: center;
+}
+
+.h1 {
+  font-size: var(--step-4);
+  font-weight: 400;
+}
+
+.h2 {
+  font-size: var(--step-3);
+}
+
+.subtitle {
+  font-family: var(--font-serif);
+  font-size: var(--step-1);
+  font-style: italic;
+  color: var(--slate-blue);
+  max-width: 36rem;
+}
+
+.sample {
+  display: inline-block;
+  margin-inline-start: 0.5em;
+  padding: 0.1em 0.55em;
+  border: 1px dashed var(--rose-mauve);
+  border-radius: 999px;
+  font-family: var(--font-sans);
+  font-size: 0.7rem;
+  font-weight: 600;
+  font-style: normal;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #9a5470;
+  vertical-align: middle;
+}

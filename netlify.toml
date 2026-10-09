@@ -1,0 +1,9 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+# Single-page app: serve index.html for every route (/podcast/episode-01, /episode01, …)
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
