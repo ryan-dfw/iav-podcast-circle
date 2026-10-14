@@ -20,10 +20,13 @@ export type InlineRun = string | { em: string } | { strong: string };
 export type RichText = string | InlineRun[];
 
 export interface ImageAsset {
+  /** Full-size image. */
   src: string;
   alt: string;
   width?: number;
   height?: number;
+  /** Optional smaller rendition of the same image (same aspect ratio), for srcset. */
+  thumb?: { src: string; width: number };
 }
 
 /**

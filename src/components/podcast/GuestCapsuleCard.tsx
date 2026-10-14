@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { episodePath, type GuestCapsule } from '@/content';
 import { ButtonLink } from '@/components/ui/Button';
 import { SampleButton } from '@/components/ui/SampleButton';
+import { defaultSrc, srcSetFor } from '@/lib/image';
 import styles from './GuestCapsuleCard.module.css';
 
 /** Button colors rotate navy → rose mauve → gray-blue, as in the client mockup. */
@@ -31,7 +32,9 @@ export function GuestCapsuleCard({ guest, index, cta }: { guest: GuestCapsule; i
       <div className={styles.portrait}>
         {showImg ? (
           <img
-            src={guest.portrait!.src}
+            src={defaultSrc(guest.portrait!)}
+            srcSet={srcSetFor(guest.portrait!)}
+            sizes="(max-width: 40rem) 90vw, 20rem"
             alt={guest.portrait!.alt}
             loading="lazy"
             decoding="async"

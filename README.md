@@ -1,84 +1,27 @@
 # IAV Podcast Circle
 
-Website for **IAV Podcast Circle**, a talent-amplifying podcast and community hosted by Isha Vazquez. It replaces the previous per-episode Canva pages with one site the client owns.
+Freelance client project, in progress. A website for a podcast and community brand. It replaces a set of disconnected, AI-generated Canva pages with one site the client owns.
 
-**Status:** design draft. Structure, design and Episode 01 are in place; client content, the newsletter provider and Circle membership are still to come (see [Not built yet](#not-built-yet)).
+**Worth a quick look, not a deep one.** It's a small, early-stage build, and much of what you'll see is placeholder awaiting client content. What's interesting is the brief and how it was scoped, more than the code volume.
 
-Built with Vite, React 19, TypeScript and React Router. It's a static site with no backend; content lives in typed local files.
+## The brief
 
-## Getting started
+The client sent an LLM-generated developer handoff. It mixed real intent (pages, palette, tone) with technology the AI had named on her behalf: Webflow, Stripe, Memberstack, Mailchimp, a login portal and a CMS. Her actual workflow was: record the podcast, have AI write up the episode, paste it into Canva, publish one page per episode. 
 
-Requires Node 22+.
 
-```bash
-npm install
-npm run dev        # http://localhost:5173
-npm run build      # typecheck + production build to dist/
-npm run preview    # serve the built site locally
-```
+## What I did
 
-Dev and production builds render identical content.
+- **Reconstructed her existing episode page** from the live Canva site (text, artwork and layout) as a native React page. Her old URL redirects to it.
+- **Turned episodes into data.** Each episode is a typed content file rendered by one template. Adding Episode 2 means adding a file, not building another page.
+- **Built the six pages from her spec** (Home, About, Podcast, Newsletter, Resources, Circle) in her palette and typography, responsive and keyboard/screen-reader friendly.
+- **Deliberately didn't build** the CMS, payments, login or newsletter integration. None of those had a real decision behind them yet. Each has a clear integration point instead, and the UI marks unconnected parts visibly so a draft can't be mistaken for a finished site.
+- **Kept it light:** a static site with no backend. YouTube titles are fetched live rather than hardcoded.
 
-## Pages
+## Status
 
-| Route | Page |
-| --- | --- |
-| `/` | Home: hero, featured guests, newsletter signup |
-| `/about` | About the host |
-| `/podcast` | Podcast hub: latest episode or playlist, episode grid, "Be a Guest" |
-| `/podcast/:slug` | Episode page, rendered from episode data |
-| `/newsletter` | Newsletter signup |
-| `/resources` | Curated resources by category |
-| `/circle` | IAV Circle: themes, events, benefits |
-| `/episode01` | Redirects to `/podcast/episode-01` (legacy Canva URL) |
+Design draft for client review.
 
-## Project structure
+## Stack
 
-```
-src/
-  config/        site identity, contact, socials; integration switches
-  content/       all editable content + the content access layer (index.ts)
-    episodes/    one file per episode + registry
-  services/      external boundaries: newsletter, YouTube metadata
-  components/    layout shell, UI primitives, podcast/episode/newsletter/etc.
-  pages/         one component per route
-  hooks/         page metadata, YouTube metadata
-  styles/        design tokens (client palette + type) and global CSS
-public/          images and episode artwork
-```
+React 19 · TypeScript · Vite · React Router · CSS Modules · Netlify
 
-Pages read content only through `src/content/index.ts`, so the local data could later be swapped for a CMS without touching components.
-
-## Adding an episode
-
-1. Copy `src/content/episodes/episode-01.ts` to `episode-02.ts` and replace the content. Sections are made of paragraphs, pull quotes and notes.
-2. Add it to the array in `src/content/episodes/index.ts`.
-3. Optional: put banner artwork in `public/episodes/<slug>/` and reference it as `heroImage`.
-
-The episode then appears on the Podcast hub and at `/podcast/<slug>`, and with `featured: true` its guest appears on the home page. Video titles are fetched live from YouTube via oEmbed; only the video ID is stored.
-
-## Configuration
-
-Optional environment variables (see `.env.example`):
-
-| Variable | Effect when set |
-| --- | --- |
-| `VITE_YOUTUBE_PLAYLIST_ID` | Podcast hub embeds the full playlist instead of the latest episode |
-| `VITE_CIRCLE_JOIN_URL` | "Join the Circle" becomes a real link |
-
-Nothing needs to be set for the site to build and run.
-
-## Not built yet
-
-These wait on decisions from the client. Placeholders are marked on the page with "Sample" tags or a white X over unconnected buttons.
-
-- **Newsletter:** the signup form validates and calls `subscribeToNewsletter()`; no provider is connected. Add an adapter in `src/services/newsletter/`.
-- **Circle membership:** no payments, accounts or gated content. The join button activates once `VITE_CIRCLE_JOIN_URL` is set.
-- **Events calendar:** events are local data read through `getUpcomingEvents()`.
-- **CMS:** not needed yet; see the content access layer above.
-
-Content marked `sample: true` in `src/content/` is placeholder and should be replaced or removed.
-
-## Deployment
-
-Deployed on Netlify. `netlify.toml` sets the build command, the `dist/` publish directory and the single-page-app rewrite so every route loads directly.

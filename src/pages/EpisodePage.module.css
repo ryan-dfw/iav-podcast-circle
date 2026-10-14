@@ -38,6 +38,24 @@
   color: var(--navy);
 }
 
+.guestRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-m);
+  margin-top: var(--space-xs);
+}
+
+.guestPortrait {
+  flex: none;
+  width: clamp(5.5rem, 22vw, 8rem);
+  height: auto;
+  aspect-ratio: 1;
+  object-fit: cover;
+  object-position: 50% 18%;
+  border-radius: 50%;
+  box-shadow: 0 0 0 6px var(--tint-blush);
+}
+
 .guests {
   font-size: 0.95rem;
   color: var(--color-muted);

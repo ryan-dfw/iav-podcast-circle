@@ -19,7 +19,7 @@ export const homeCopy = {
     // From the mockup.
     title: 'Featured Guests',
     subtitle: 'Capturing raw talent before the world meets them.',
-    cta: 'Listen to Episode',
+    cta: 'Read & Listen',
   },
 };
 

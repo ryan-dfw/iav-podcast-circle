@@ -15,7 +15,19 @@ export const episode01: Episode = {
   summary:
     'Host Isha speaks with Paola about her journey through narcissistic abuse, the book that grew out of her healing, and the small red flags worth noticing.',
   host: 'Isha',
-  guests: [{ name: 'Paola Roman', descriptor: 'Author, “The Narcissist Love of My Life”' }],
+  guests: [
+    {
+      name: 'Paola Roman',
+      descriptor: 'Author, “The Narcissist Love of My Life”',
+      portrait: {
+        src: '/images/guests/paola-roman-full.webp',
+        width: 1600,
+        height: 2000,
+        thumb: { src: '/images/guests/paola-roman-thumb.webp', width: 640 },
+        alt: 'Portrait of Paola Roman',
+      },
+    },
+  ],
   video: { videoId: 'tHH6PM3AycU' },
   // Banner artwork from the client's original Canva page (decorative, so empty alt).
   heroImage: { src: '/episodes/episode-01/hero.webp', alt: '', width: 1344, height: 576 },

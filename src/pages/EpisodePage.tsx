@@ -3,6 +3,7 @@ import { episodePath, getEpisode, getEpisodes, newsletterCopy } from '@/content'
 import { usePageMeta } from '@/hooks/usePageMeta';
 import { useYouTubeMeta } from '@/hooks/useYouTubeMeta';
 import { RichText } from '@/lib/RichText';
+import { defaultSrc, srcSetFor } from '@/lib/image';
 import { Section } from '@/components/ui/Section';
 import { EpisodeHero } from '@/components/episode/EpisodeHero';
 import { EpisodeSections } from '@/components/episode/EpisodeBlocks';
@@ -45,16 +46,34 @@ export function EpisodePage() {
             {episode.series} · Episode {episode.number}
           </p>
           {episode.guests.length > 0 && (
-            <p className={styles.guests}>
-              Hosted by {episode.host} · with{' '}
-              {episode.guests.map((g, i) => (
-                <span key={g.name}>
-                  {i > 0 && ', '}
-                  <strong>{g.name}</strong>
-                  {g.descriptor && <span className={styles.descriptor}> — {g.descriptor}</span>}
-                </span>
-              ))}
-            </p>
+            <div className={styles.guestRow}>
+              {episode.guests
+                .filter((g) => g.portrait)
+                .map((g) => (
+                  <img
+                    key={g.name}
+                    className={styles.guestPortrait}
+                    src={defaultSrc(g.portrait!)}
+                    srcSet={srcSetFor(g.portrait!)}
+                    sizes="8rem"
+                    alt={g.portrait!.alt}
+                    width={g.portrait!.width}
+                    height={g.portrait!.height}
+                    loading="lazy"
+                    decoding="async"
+                  />
+                ))}
+              <p className={styles.guests}>
+                Hosted by {episode.host} · with{' '}
+                {episode.guests.map((g, i) => (
+                  <span key={g.name}>
+                    {i > 0 && ', '}
+                    <strong>{g.name}</strong>
+                    {g.descriptor && <span className={styles.descriptor}> — {g.descriptor}</span>}
+                  </span>
+                ))}
+              </p>
+            </div>
           )}
         </header>
 

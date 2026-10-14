@@ -28,3 +28,6 @@ Thumbs.db
 !.vscode/extensions.json
 .idea/
 *.swp
+
+# Source images (originals before web conversion)
+png_in/
