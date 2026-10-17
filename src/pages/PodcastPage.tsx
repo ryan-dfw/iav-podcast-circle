@@ -1,21 +1,21 @@
-import { getEpisodes, getLatestEpisode, podcastCopy } from '@/content';
+import { getEpisodes, podcastCopy } from '@/content';
 import { integrations } from '@/config/integrations';
 import { mailto, site } from '@/config/site';
 import { usePageMeta } from '@/hooks/usePageMeta';
-import { useYouTubeMeta } from '@/hooks/useYouTubeMeta';
+import { useLatestVideos } from '@/hooks/useLatestVideos';
 import { ButtonLink } from '@/components/ui/Button';
 import { Section, SectionHeading } from '@/components/ui/Section';
 import { EpisodeCard } from '@/components/podcast/EpisodeCard';
-import { YouTubeEmbed } from '@/components/podcast/YouTubeEmbed';
+import { VideoCard } from '@/components/podcast/VideoCard';
 import styles from './pages.module.css';
 
-/** Central podcast hub: playlist (or latest episode), episode grid, Be a Guest. */
+const LATEST_COUNT = 3;
+
+/** Podcast hub: the channel's three newest videos, a link to the rest, Be a Guest. */
 export function PodcastPage() {
   usePageMeta({ title: 'Podcast', description: podcastCopy.lead });
   const episodes = getEpisodes();
-  const latest = getLatestEpisode();
-  const { playlistId } = integrations.youtube;
-  const latestMeta = useYouTubeMeta(latest?.video?.videoId);
+  const latest = useLatestVideos(LATEST_COUNT);
 
   return (
     <>
@@ -24,32 +24,33 @@ export function PodcastPage() {
         <p className={styles.lead}>{podcastCopy.lead}</p>
       </div>
 
-      <Section tight labelledBy="watch-title">
-        <div className={styles.videoWrap}>
-          <h2 id="watch-title" className="visually-hidden">
-            {playlistId ? 'All episodes' : 'Latest episode'}
-          </h2>
-          {playlistId ? (
-            <YouTubeEmbed kind="playlist" playlistId={playlistId} title={`${site.podcast.showName} — all episodes`} />
-          ) : (
-            latest?.video && (
-              <>
-                <YouTubeEmbed kind="video" videoId={latest.video.videoId} />
-                {latestMeta && <p className={styles.caption}>Latest: {latestMeta.title}</p>}
-              </>
-            )
-          )}
-        </div>
-      </Section>
-
       <Section tone="surface" labelledBy="episodes-title">
         <div className="container">
           <SectionHeading id="episodes-title" title="Episodes" />
-          <div className={styles.episodes}>
-            {episodes.map((ep) => (
-              <EpisodeCard key={ep.slug} episode={ep} />
-            ))}
+          <div className={styles.episodes} aria-busy={latest.status === 'loading'}>
+            {latest.status === 'ready' &&
+              latest.videos.map((video) => {
+                // Episodes with a write-up here link to it; the rest open on YouTube.
+                const written = episodes.find((e) => e.video?.videoId === video.videoId);
+                return written ? (
+                  <EpisodeCard key={video.videoId} episode={written} />
+                ) : (
+                  <VideoCard key={video.videoId} video={video} />
+                );
+              })}
+            {latest.status === 'error' &&
+              episodes.slice(0, LATEST_COUNT).map((ep) => <EpisodeCard key={ep.slug} episode={ep} />)}
           </div>
+          <p className={styles.allEpisodes}>
+            All episodes on{' '}
+            <a href={integrations.youtube.channelUrl} target="_blank" rel="noopener noreferrer">
+              YouTube<span className="visually-hidden"> (opens in a new tab)</span>
+            </a>{' '}
+            &amp;{' '}
+            <a href={integrations.spotify.showUrl} target="_blank" rel="noopener noreferrer">
+              Spotify<span className="visually-hidden"> (opens in a new tab)</span>
+            </a>
+          </p>
         </div>
       </Section>
 

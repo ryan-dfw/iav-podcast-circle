@@ -1,14 +1,20 @@
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Navigate, Route, Routes, useParams } from 'react-router-dom';
 import { getLegacyRedirects } from '@/content';
 import { SiteLayout } from '@/components/layout/SiteLayout';
 import { HomePage } from '@/pages/HomePage';
 import { AboutPage } from '@/pages/AboutPage';
 import { PodcastPage } from '@/pages/PodcastPage';
 import { EpisodePage } from '@/pages/EpisodePage';
-import { NewsletterPage } from '@/pages/NewsletterPage';
-import { ResourcesPage } from '@/pages/ResourcesPage';
+import { BookPage } from '@/pages/BookPage';
+import { ArticlesPage } from '@/pages/ArticlesPage';
+import { ArticlePage } from '@/pages/ArticlePage';
 import { CirclePage } from '@/pages/CirclePage';
 import { NotFoundPage } from '@/pages/NotFoundPage';
+
+function RedirectEpisode() {
+  const { slug } = useParams();
+  return <Navigate to={`/podcast/${slug}`} replace />;
+}
 
 export function App() {
   return (
@@ -16,12 +22,19 @@ export function App() {
       <Routes>
         <Route element={<SiteLayout />}>
           <Route index element={<HomePage />} />
-          <Route path="about" element={<AboutPage />} />
           <Route path="podcast" element={<PodcastPage />} />
           <Route path="podcast/:slug" element={<EpisodePage />} />
-          <Route path="newsletter" element={<NewsletterPage />} />
-          <Route path="resources" element={<ResourcesPage />} />
+          <Route path="articles" element={<ArticlesPage />} />
+          <Route path="articles/:slug" element={<ArticlePage />} />
+          <Route path="about" element={<AboutPage />} />
+          <Route path="book" element={<BookPage />} />
           <Route path="circle" element={<CirclePage />} />
+
+          {/* Pages folded into the four main sections */}
+          <Route path="stories" element={<Navigate to="/podcast" replace />} />
+          <Route path="stories/:slug" element={<RedirectEpisode />} />
+          <Route path="newsletter" element={<Navigate to="/about#newsletter" replace />} />
+          <Route path="resources" element={<Navigate to="/circle#resources" replace />} />
 
           {/* Keep old links working, e.g. the Canva-era /episode01 */}
           {getLegacyRedirects().map(({ from, to }) => (

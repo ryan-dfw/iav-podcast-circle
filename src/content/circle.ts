@@ -12,8 +12,8 @@ import type { Benefit, CircleEvent, MonthlyTheme } from './types';
 
 export const circleIntro = {
   eyebrow: 'The IAV Circle',
-  title: 'A circle for growing, together.',
-  lead: 'The IAV Circle is a membership for personal development events — an intimate space to keep amplifying the gifts our conversations bring to light.',
+  title: 'Find your gift. Find your people',
+  lead: 'An intimate membership for people ready to keep amplifying what these conversations bring to light - through gatherings, guided work, and a community that sees you.',
 };
 
 export const monthlyThemes: MonthlyTheme[] = [
@@ -47,3 +47,15 @@ export const events: CircleEvent[] = [
     description: 'Placeholder event used to preview the calendar layout.',
   },
 ];
+
+/**
+ * Guest nomination call-to-action. The button is not wired up yet. Planned: a
+ * form where the visitor gives another person's contact details and a short
+ * story about them; submissions will be stored (and tracked) separately later.
+ */
+export const nominateCopy = {
+  eyebrow: 'Know a silent angel?',
+  title: 'Nominate someone.',
+  body: 'The best guests are the people no one thinks to interview. If someone in your life is quietly surviving and thriving, I want to meet them.',
+  cta: 'Nominate a guest',
+};

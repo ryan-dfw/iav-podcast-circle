@@ -1,0 +1,88 @@
+.body {
+  width: min(100% - 2 * var(--gutter), 40rem);
+  margin-inline: auto;
+}
+
+.section {
+  margin-top: var(--space-xl);
+}
+
+.section:first-child {
+  margin-top: 0;
+}
+
+.heading {
+  margin-bottom: var(--space-s);
+  font-family: var(--font-sans);
+  font-size: var(--step-1);
+  font-weight: 600;
+  letter-spacing: 0;
+  color: var(--navy);
+}
+
+.paragraph {
+  margin: 0 0 var(--space-m);
+  font-family: var(--font-reading);
+  font-size: 1.3rem; /* Garamond runs small; 1.3rem reads like 1rem Inter */
+  line-height: 1.6;
+  color: var(--charcoal);
+}
+
+/* Drop cap on the opening paragraph */
+.first .paragraph::first-letter {
+  float: left;
+  margin: 0.06em 0.12em 0 0;
+  font-family: var(--font-serif);
+  font-size: 4.6em;
+  line-height: 0.78;
+  color: var(--navy);
+}
+
+/* Pull quote set off by rules */
+.pull {
+  margin: var(--space-l) 0;
+  padding: var(--space-m) var(--space-s);
+  border-block: 1px solid var(--navy);
+  text-align: center;
+}
+
+.pull p {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-size: var(--step-2);
+  font-style: italic;
+  line-height: 1.3;
+  color: var(--navy);
+}
+
+.quote {
+  margin: var(--space-l) 0;
+  padding-left: var(--space-m);
+  border-left: 2px solid var(--rose-mauve);
+}
+
+.quote p {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-size: var(--step-1);
+  font-style: italic;
+  color: var(--navy);
+}
+
+.quote figcaption {
+  margin-top: var(--space-xs);
+  font-size: 0.9rem;
+  color: var(--color-muted);
+}
+
+/* Callout */
+.note {
+  margin: var(--space-m) 0;
+  padding: var(--space-s) var(--space-m);
+  border-left: 3px solid var(--lavender);
+  background: var(--tint-cream);
+  font-family: var(--font-reading);
+  font-size: 1.1rem;
+  font-style: italic;
+  color: var(--color-muted);
+}

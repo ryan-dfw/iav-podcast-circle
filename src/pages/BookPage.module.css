@@ -1,0 +1,89 @@
+.layout {
+  display: grid;
+  gap: var(--space-xl);
+  align-items: center;
+  justify-items: center;
+  padding-block: var(--space-xl) var(--space-2xl);
+}
+
+.cover {
+  width: min(80vw, 24rem);
+  height: auto;
+  border-radius: 2px 6px 6px 2px;
+  box-shadow:
+    0 2px 4px rgb(10 26 47 / 0.08),
+    0 18px 40px rgb(10 26 47 / 0.16);
+}
+
+.text {
+  display: grid;
+  gap: var(--space-s);
+  justify-items: start;
+  width: 100%;
+  max-width: 34rem;
+}
+
+.title {
+  font-size: var(--step-4);
+  line-height: 1.05;
+}
+
+.subtitle {
+  font-family: var(--font-serif);
+  font-size: var(--step-1);
+  font-style: italic;
+  line-height: 1.35;
+  color: var(--color-muted);
+}
+
+.author {
+  font-size: 0.9rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--slate-blue);
+}
+
+@media (min-width: 52rem) {
+  .layout {
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: var(--space-2xl);
+    justify-items: start;
+  }
+  .text {
+    justify-self: start;
+  }
+}
+
+.description {
+  font-family: var(--font-reading);
+  font-size: 1.3rem;
+  line-height: 1.6;
+  color: var(--charcoal);
+}
+
+.details {
+  display: grid;
+  gap: var(--space-xs);
+  width: 100%;
+  margin: var(--space-xs) 0;
+  padding-block: var(--space-s);
+  border-block: 1px solid var(--color-rule);
+}
+
+.details div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-s);
+}
+
+.details dt {
+  min-width: 8rem;
+  font-size: 0.8rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--slate-blue);
+}
+
+.details dd {
+  margin: 0;
+}

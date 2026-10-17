@@ -103,24 +103,6 @@ export interface Episode {
 }
 
 /* ------------------------------------------------------------------ */
-/* Guest capsules (home page)                                          */
-/* ------------------------------------------------------------------ */
-
-/**
- * A guest shown in the home page "Featured Guests" row. Real capsules are
- * derived from featured episodes; standalone entries here are placeholders.
- */
-export interface GuestCapsule extends MaybeSample {
-  name: string;
-  portrait?: ImageAsset;
-  /**
-   * The episode this guest appeared in. `slug` links to the episode page;
-   * placeholder episodes have no slug (and no page).
-   */
-  episode?: Pick<Episode, 'number' | 'title'> & { slug?: string };
-}
-
-/* ------------------------------------------------------------------ */
 /* Resources                                                           */
 /* ------------------------------------------------------------------ */
 
@@ -163,4 +145,42 @@ export interface MonthlyTheme extends MaybeSample {
 export interface Benefit extends MaybeSample {
   title: string;
   description: string;
+}
+
+/* ------------------------------------------------------------------ */
+/* Articles                                                            */
+/* ------------------------------------------------------------------ */
+
+/**
+ * Blocks an article body can contain. Reuses the episode blocks and adds a
+ * pull quote set off by rules. Everything here is plain JSON-serialisable, so
+ * a submission form / database (e.g. Firestore) can store an `Article` as-is.
+ */
+export type ArticleBlock = EpisodeBlock | { type: 'pull'; text: string };
+
+export interface ArticleSection {
+  /** Omit for the opening section, which has no heading. */
+  heading?: string;
+  blocks: ArticleBlock[];
+}
+
+export interface Article extends MaybeSample {
+  /** URL segment: /articles/:slug */
+  slug: string;
+  /** Short kind of piece, e.g. "Essay". Used for filtering. */
+  category: string;
+  /** Optional topic shown after the category, e.g. "Reinvention". */
+  topic?: string;
+  title: string;
+  /** Standfirst under the title; also used on cards and in metadata. */
+  dek: string;
+  author: string;
+  /** ISO date (YYYY-MM-DD). */
+  publishedOn: string;
+  heroImage?: ImageAsset;
+  /** Caption printed under the hero image. */
+  heroCaption?: string;
+  sections: ArticleSection[];
+  /** Other places this piece also ran. Rendered after the article; `url` makes the name a link. */
+  alsoPublishedOn?: Array<{ name: string; url?: string }>;
 }

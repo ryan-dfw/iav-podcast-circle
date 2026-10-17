@@ -10,13 +10,13 @@ export function SiteFooter() {
     <footer className={styles.footer}>
       <div className={`container ${styles.top}`}>
         <div className={styles.brand}>
-          <p className={styles.name}>{site.name}</p>
+          <p className={styles.name}>{site.shortName}</p>
           <p className={styles.line}>{site.host.signatureLine}</p>
         </div>
 
         <nav aria-label="Footer">
           <ul className={styles.links}>
-            {primaryNav.slice(1).map((item) => (
+            {primaryNav.map((item) => (
               <li key={item.to}>
                 <Link to={item.to}>{item.label}</Link>
               </li>
@@ -47,7 +47,7 @@ export function SiteFooter() {
       </div>
       <div className={`container ${styles.bottom}`}>
         <p>
-          © {year} {site.name}
+          © {year} {site.shortName}
         </p>
       </div>
     </footer>

@@ -1,0 +1,43 @@
+.end {
+  width: min(100% - 2 * var(--gutter), 40rem);
+  margin: var(--space-xl) auto 0;
+  text-align: center;
+}
+
+.stars {
+  letter-spacing: 0.6em;
+  color: var(--color-muted);
+}
+
+.note {
+  margin-top: var(--space-m);
+  padding-top: var(--space-m);
+  border-top: 1px solid var(--color-rule);
+  text-align: left;
+  font-family: var(--font-reading);
+  font-size: 1.1rem;
+  font-style: italic;
+  line-height: 1.6;
+  color: var(--color-muted);
+}
+
+.note p {
+  margin: 0 0 var(--space-s);
+}
+
+/* Links stay underlined (not colour alone) and darken on hover. */
+.note a {
+  color: var(--navy);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+}
+
+.note a:hover {
+  color: var(--slate-blue);
+}
+
+.back {
+  margin-top: var(--space-l);
+  text-align: left;
+}

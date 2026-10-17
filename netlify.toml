@@ -2,6 +2,14 @@
   command = "npm run build"
   publish = "dist"
 
+# Same-origin proxy for the channel's RSS feed, Shorts excluded (browsers can't fetch it directly).
+# Keep the playlist_id in sync with src/config/integrations.ts and vite.config.ts.
+[[redirects]]
+  from = "/api/youtube-feed"
+  to = "https://www.youtube.com/feeds/videos.xml?playlist_id=UULFxfm6b5Y5mdn5vTh3fbRqcQ"
+  status = 200
+  force = true
+
 # Single-page app: serve index.html for every route (/podcast/episode-01, /episode01, …)
 [[redirects]]
   from = "/*"

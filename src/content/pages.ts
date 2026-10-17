@@ -8,18 +8,21 @@
  */
 
 export const homeCopy = {
+  // From the homepage design mockup (ex/Homepage-html).
   hero: {
-    // From the handoff: "IAV Podcast Circle — Talent Amplified / Where raw stories become legacy."
-    title: 'Talent Amplified',
-    subtitle: 'Where raw stories become legacy.',
-    primaryCta: 'Listen to the Podcast',
-    secondaryCta: 'Join the Circle',
-  },
-  guests: {
-    // From the mockup.
-    title: 'Featured Guests',
-    subtitle: 'Capturing raw talent before the world meets them.',
-    cta: 'Read & Listen',
+    eyebrow: 'Let’s Talk for a Bit',
+    title: 'Your gift didn’t disappear.',
+    titleAccent: 'Life just got loud.',
+    body: 'After 25 years leading teams in corporate America, I’m collecting the raw, real stories of everyday people who found their gift in their hardest seasons. It’s a human time capsule for a world being reshaped by AI. Your story belongs in it.',
+    starter: {
+      lead: 'Start here:',
+      name: 'The Circle Starter — 7 Days to Find Your Gift and Your People',
+      note: '(free)',
+      cta: 'Send me the free kit',
+    },
+    latestStory: 'or hear the latest story →',
+    // Placeholder until the client supplies a high-res photo: point src at it (4:5 works best).
+    portrait: { src: '/images/portrait-placeholder.svg', alt: '', width: 400, height: 500 },
   },
 };
 
@@ -84,4 +87,50 @@ export const resourcesCopy = {
   eyebrow: 'Resources',
   title: 'Curated for creators',
   lead: 'Tools, people, and places we trust to help talent grow.',
+};
+
+/** Closing block on every article. Same for all articles; kept in Isha’s words. */
+export const articleFooterCopy = {
+  bio: 'Isha Vazquez is a Talent Amplifier and the host of Let’s Talk for a Bit, a podcast about everyday people with hidden gifts. She lives in Plano, Texas, with her cocker spaniel, Joaquin.',
+  nominate: 'Know a silent angel? Nominate them at',
+  findShow: 'or find the show on',
+  handle: '@letstalk_iavpodcastcircle',
+};
+
+/** The Book page. Title, subtitle and author are as printed on the cover. */
+export const bookCopy = {
+  eyebrow: 'The Book',
+  title: 'Talent Within',
+  subtitle: 'Remembering who you are when life asks everything of you',
+  author: 'I. A. Vazquez',
+  cover: {
+    src: '/images/book/talent-within-cover.webp',
+    thumb: { src: '/images/book/talent-within-cover_thumb.webp', width: 640 },
+    width: 2400,
+    height: 3600,
+    alt: 'Cover of Talent Within by I. A. Vazquez: a pale violet chrysalis hanging from a single thread above the title.',
+  },
+  // Lorem ipsum until the client supplies the real description, release details and purchase link.
+  sample: true,
+  description: [
+    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua, ut enim ad minim veniam quis nostrud.',
+    'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt.',
+  ],
+  details: [
+    { label: 'Release', value: 'Lorem ipsum 2027' },
+    { label: 'Format', value: 'Dolor sit amet' },
+    { label: 'Available at', value: 'Consectetur adipiscing' },
+  ],
+  cta: 'Get the book',
+};
+
+/** "The book, in progress" early-reader signup, from the homepage mockup (ex/Homepage-html). */
+export const bookSignupCopy = {
+  eyebrow: 'The book, in progress',
+  title: 'The talent that carries us through our darkest chapters.',
+  // Mockup reads "leading teams"; confirm with the client.
+  body: 'These stories — together with what I learned leading teams in corners of the world most people never see — are becoming a book. Join the list to read early chapters first and help shape it.',
+  emailLabel: 'Email for early chapters',
+  placeholder: 'Your email address',
+  cta: 'Read it first',
 };

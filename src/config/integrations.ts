@@ -15,8 +15,13 @@ function optional(value: string | undefined): string | null {
 
 export const integrations = {
   youtube: {
-    /** Full-show playlist for the Podcast hub. Falls back to the latest episode's video. */
-    playlistId: optional(env.VITE_YOUTUBE_PLAYLIST_ID),
+    /** Channel whose newest videos feed the Podcast page (via the /api/youtube-feed proxy). */
+    channelId: 'UCxfm6b5Y5mdn5vTh3fbRqcQ',
+    channelUrl: 'https://www.youtube.com/@letstalkforabit',
+  },
+
+  spotify: {
+    showUrl: 'https://open.spotify.com/show/2EcpQ0LE4GMmmbN42QNPcC',
   },
 
   newsletter: {

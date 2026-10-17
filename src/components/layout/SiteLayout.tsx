@@ -6,7 +6,7 @@ import styles from './SiteLayout.module.css';
 
 /** Application shell shared by every page. */
 export function SiteLayout() {
-  const { pathname } = useLocation();
+  const { pathname, hash } = useLocation();
   const mainRef = useRef<HTMLElement>(null);
   const firstRender = useRef(true);
 
@@ -17,9 +17,14 @@ export function SiteLayout() {
       firstRender.current = false;
       return;
     }
-    window.scrollTo(0, 0);
-    mainRef.current?.focus({ preventScroll: true });
-  }, [pathname]);
+    const target = hash ? document.getElementById(decodeURIComponent(hash.slice(1))) : null;
+    if (target) {
+      target.scrollIntoView();
+    } else {
+      window.scrollTo(0, 0);
+      mainRef.current?.focus({ preventScroll: true });
+    }
+  }, [pathname, hash]);
 
   // Match the overscroll ("bounce") area to the header at the top and the
   // footer at the bottom.

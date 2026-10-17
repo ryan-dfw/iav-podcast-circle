@@ -1,0 +1,89 @@
+/* Values follow the "book, in progress" section of ex/Homepage-html/Main.dc.html. */
+.section {
+  padding: 112px 24px;
+  background: var(--blush);
+}
+
+.inner {
+  max-width: 44rem;
+}
+
+.eyebrow {
+  margin: 0 0 14px;
+  font-size: 13px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--slate-blue);
+}
+
+.title {
+  margin: 0 0 18px;
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: clamp(36px, 4vw, 52px);
+  line-height: 1.1;
+}
+
+.body {
+  margin: 0 0 28px;
+  font-size: 18px;
+  line-height: 1.7;
+  color: var(--navy);
+}
+
+.form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  max-width: 520px;
+}
+
+.input {
+  flex: 1 1 240px;
+  min-height: 52px;
+  padding: 0 18px;
+  border-radius: 6px;
+  border: 1px solid var(--slate-blue);
+  background: var(--cream);
+  color: var(--navy);
+  font: inherit;
+  font-size: 16px;
+}
+
+.input:focus-visible {
+  outline: 2px solid var(--navy);
+  outline-offset: 2px;
+}
+
+.input[aria-invalid='true'] {
+  border-color: #a8435f;
+}
+
+.submit {
+  min-height: 52px;
+  padding: 0 24px;
+  border: 0;
+  border-radius: 6px;
+  background: var(--navy);
+  color: var(--cream);
+  font: inherit;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.submit:focus-visible {
+  outline: 2px solid var(--navy);
+  outline-offset: 2px;
+}
+
+.notice {
+  min-height: 1.5em;
+  margin-top: 8px;
+  font-size: 15px;
+  color: var(--navy);
+}
+
+.notice[data-tone='error'] {
+  color: #8a2f4c;
+}

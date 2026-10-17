@@ -3,12 +3,11 @@ export interface NavItem {
   to: string;
 }
 
-/** Primary navigation, in the order given in the client's handoff. */
+/** Primary navigation. Home is reached through the wordmark. */
 export const primaryNav: NavItem[] = [
-  { label: 'Home', to: '/' },
   { label: 'About', to: '/about' },
   { label: 'Podcast', to: '/podcast' },
-  { label: 'Newsletter', to: '/newsletter' },
-  { label: 'Resources', to: '/resources' },
-  { label: 'The IAV Circle', to: '/circle' },
+  { label: 'Articles', to: '/articles' },
+  { label: 'The Book', to: '/book' },
+  { label: 'The Circle', to: '/circle' },
 ];

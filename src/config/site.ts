@@ -15,9 +15,8 @@ export interface SocialLink {
 }
 
 const socials: Array<Omit<SocialLink, 'url'> & { url?: string }> = [
-  // Source: client email signature ("YouTube, Spotify & Linktree").
-  // Pending: this URL currently doesn't resolve.
-  { id: 'linktree', label: 'Linktree', url: 'https://linktr.ee/letstalk_iavpodcastcircle', pending: true },
+  // Source: client email signature ("YouTube, Spotify & Linktree"); URL confirmed working.
+  { id: 'linktree', label: 'Linktree', url: 'https://linktr.ee/iavpodcastcircle' },
   // TODO(client): channel / show URLs were not provided — add them to show the icons.
   { id: 'youtube', label: 'YouTube', url: undefined },
   { id: 'spotify', label: 'Spotify', url: undefined },
@@ -26,6 +25,8 @@ const socials: Array<Omit<SocialLink, 'url'> & { url?: string }> = [
 
 export const site = {
   name: 'IAV Podcast Circle',
+  /** Short brand name shown in the header wordmark and footer. */
+  shortName: 'IAV Circle',
   tagline: 'Talent Amplified',
   subtagline: 'Where raw stories become legacy.',
   /** Production origin, used for canonical/OG URLs. */

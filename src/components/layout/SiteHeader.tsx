@@ -1,7 +1,6 @@
 import { useEffect, useId, useLayoutEffect, useRef, useState } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import { primaryNav, type NavItem } from '@/content/navigation';
-import { site } from '@/config/site';
 import styles from './SiteHeader.module.css';
 
 function NavList({ items, className }: { items: NavItem[]; className?: string }) {
@@ -24,8 +23,8 @@ function NavList({ items, className }: { items: NavItem[]; className?: string })
 
 function Wordmark() {
   return (
-    <Link to="/" className={styles.wordmark} aria-label={`${site.name} — home`}>
-      <span className={styles.wordmarkIav}>IAV</span> Podcast Circle
+    <Link to="/" className={styles.wordmark} aria-label="IAV Circle — home">
+      <span className={styles.wordmarkIav}>IAV</span> Circle
     </Link>
   );
 }

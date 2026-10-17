@@ -1,10 +1,12 @@
-import { aboutCopy, getEpisodes, podcastCopy } from '@/content';
+import { aboutCopy, getEpisodes, newsletterCopy, podcastCopy } from '@/content';
 import { mailto, site } from '@/config/site';
 import { usePageMeta } from '@/hooks/usePageMeta';
 import { ButtonLink } from '@/components/ui/Button';
 import { Placeholder } from '@/components/ui/Placeholder';
 import { EpisodeCard } from '@/components/podcast/EpisodeCard';
 import { JoinCircleButton } from '@/components/circle/JoinCircleButton';
+import { NewsletterSignup } from '@/components/newsletter/NewsletterSignup';
+import { Section } from '@/components/ui/Section';
 import styles from './AboutPage.module.css';
 
 export function AboutPage() {
@@ -77,7 +79,18 @@ export function AboutPage() {
         </div>
       </section>
 
-      {/* 4. Next steps */}
+      {/* 4. Newsletter (folded in from the old Newsletter page) */}
+      <Section tone="blush">
+        <div className="container" id="newsletter">
+          <NewsletterSignup
+            source="about-page"
+            title={newsletterCopy.title}
+            subtitle={newsletterCopy.subtitle}
+          />
+        </div>
+      </Section>
+
+      {/* 5. Next steps */}
       <section className={styles.next} aria-labelledby="next-title">
         <div className={`container ${styles.nextInner}`}>
           <h2 id="next-title" className={styles.h2}>
