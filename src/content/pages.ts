@@ -60,6 +60,12 @@ export const aboutCopy = {
 };
 
 export const podcastCopy = {
+  // From the homepage design mockup (ex/Main.dc.html).
+  capsule: {
+    eyebrow: 'The human capsule',
+    title: 'In a world learning to think like machines, someone should remember what it felt like to be human.',
+    body: 'Every conversation is preserved as part of a living record: our failures, our embarrassments, our quiet comebacks, and the talents that carried us through. A capsule for the humans of tomorrow.',
+  },
   eyebrow: 'The Podcast',
   title: 'Conversations that become capsules',
   lead: 'Intimate interviews with talented people, captured in their raw, human state — before the world meets them.',

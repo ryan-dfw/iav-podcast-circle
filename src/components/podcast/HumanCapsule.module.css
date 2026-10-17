@@ -1,0 +1,38 @@
+/* Values follow the "human capsule" section of ex/Main.dc.html. */
+.section {
+  padding: 120px 24px;
+  background: var(--navy);
+  color: var(--cream);
+  text-align: center;
+}
+
+.inner {
+  max-width: 820px;
+  margin: 0 auto;
+}
+
+.eyebrow {
+  margin: 0 0 18px;
+  font-size: 13px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--blush);
+}
+
+.title {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-style: italic;
+  font-size: clamp(34px, 4.4vw, 58px);
+  line-height: 1.15;
+  color: var(--cream);
+}
+
+.body {
+  max-width: 620px;
+  margin: 32px auto 0;
+  font-size: 18px;
+  line-height: 1.7;
+  color: var(--lavender);
+}

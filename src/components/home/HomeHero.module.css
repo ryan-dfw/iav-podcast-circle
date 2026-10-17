@@ -1,10 +1,10 @@
-/* Values replicate the first section of ex/Homepage-html/Main.dc.html. */
+/* Values replicate the first section of ex/Main.dc.html. */
 .hero {
   position: relative;
   overflow: hidden;
   color: var(--cream);
   padding: 96px 24px 112px;
-  background: radial-gradient(ellipse at 30% 40%, var(--slate-blue) 0%, var(--navy) 70%);
+  background: linear-gradient(180deg, var(--slate-blue) 0%, #5e6688 40%, #9a94b8 78%, var(--lavender) 100%);
 }
 
 .sparkleA,
