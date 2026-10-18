@@ -31,10 +31,13 @@ export const homeCopy = {
  * supplied. Everything she still needs to provide is a visible placeholder.
  */
 export const aboutCopy = {
-  // DRAFT — her signature facts rewritten in first person; no new claims.
-  intro:
-    'I’m a podcast host, nutrition coach, and talent amplifier, certified in neuropsychology. On my show I sit down with talented people and let them be heard as they are — before the world meets them.',
-  roles: ['Talent amplifier', 'Podcast host', 'Nutrition coach'],
+  // Bio in the client's own wording (her preferred About description, Oct 2026).
+  bio: [
+    'Ishah (Isha) Vazquez is a Talent Amplifier, writer, and host of the Let’s Talk for a Bit podcast. After more than 25 years in corporate America — including 18+ years in financial services, most recently as an Executive Director at a financial firm — she built her career leading teams, strengthening risk governance, and developing AI training programs. Along the way, she learned that her greatest skill was never the spreadsheets. It was spotting the talent in people that they couldn’t yet see in themselves.',
+    'Today, she has traded the corner office for the conversation. Through her consulting work, the IAV Circle community, and her podcast, Isha seeks out the “silent angels” — everyday people quietly surviving, thriving, and carrying gifts the world hasn’t noticed yet — and helps amplify them. Certified in nutrition and neuropsychology, she brings a whole-person lens to the question at the heart of everything she does: who are you when life asks everything of you?',
+    'She is the author of the article “I Bid on Myself” and is writing her first book, Talent Within: Remembering who you are when life asks everything of you, under the name I. A. Vazquez. Her mission is to create a living capsule of real human stories in the age of AI — proof that the most valuable talent is often the one hiding in plain sight.',
+  ],
+  roles: ['Talent Amplifier', 'Writer', 'Podcast host'],
   credentials: [
     // TODO(client): spell out CNC and CNP as she wants them written.
     { short: 'CNC', full: undefined as string | undefined },
@@ -112,9 +115,9 @@ export const bookCopy = {
   cover: {
     src: '/images/book/talent-within-cover.webp',
     thumb: { src: '/images/book/talent-within-cover_thumb.webp', width: 640 },
-    width: 2400,
-    height: 3600,
-    alt: 'Cover of Talent Within by I. A. Vazquez: a pale violet chrysalis hanging from a single thread above the title.',
+    width: 1200,
+    height: 1800,
+    alt: 'Cover of Talent Within by I. A. Vazquez: a leaf-shaped pendant hanging from a single thread, holding a childhood photo, above the title.',
   },
   // Lorem ipsum until the client supplies the real description, release details and purchase link.
   sample: true,

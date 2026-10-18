@@ -39,7 +39,11 @@ export function AboutPage() {
               {host.name}
             </h1>
             <p className={styles.roles}>{c.roles.join(' · ')}</p>
-            <p className={styles.lead}>{c.intro}</p>
+            {c.bio.map((p) => (
+              <p key={p} className={styles.lead}>
+                {p}
+              </p>
+            ))}
             <ul className={styles.credentials} aria-label="Credentials">
               {c.credentials.map((cr) => (
                 <li key={cr.short} title={cr.full ?? 'Full title to be confirmed'}>
