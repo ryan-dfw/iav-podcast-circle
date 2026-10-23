@@ -39,7 +39,13 @@ export const site = {
     roles: ['Talent Amplifier', 'Podcast host & nutrition coach', 'Certified in neuropsychology'],
     // From the handoff ("Professional bio (CNC, CNP)"). Confirm exact wording with the client.
     credentials: 'CNC, CNP',
-    portrait: { src: '/images/isha-vazquez.jpg', alt: 'Portrait of Isha Vazquez', width: 240, height: 240 },
+    portrait: {
+      src: '/images/isha-vazquez-about.webp',
+      thumb: { src: '/images/isha-vazquez-about_thumb.webp', width: 640 },
+      alt: 'Portrait of Isha Vazquez, the host.',
+      width: 1600,
+      height: 2400,
+    },
     signatureLine:
       'Discovering talented humans and preserving their gifts in a living time capsule, one conversation at a time.',
   },

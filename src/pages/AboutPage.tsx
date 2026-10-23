@@ -26,11 +26,13 @@ export function AboutPage() {
           <figure className={styles.portraitFrame}>
             <img
               src={host.portrait.src}
+              srcSet={`${host.portrait.thumb.src} ${host.portrait.thumb.width}w, ${host.portrait.src} ${host.portrait.width}w`}
+              sizes="(min-width: 52rem) 24rem, 90vw"
               alt={host.portrait.alt}
               width={host.portrait.width}
               height={host.portrait.height}
+              fetchPriority="high"
             />
-            <figcaption className={styles.portraitNote}>Placeholder · high‑res portrait needed</figcaption>
           </figure>
 
           <div className={styles.introText}>

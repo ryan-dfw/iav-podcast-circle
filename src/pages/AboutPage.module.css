@@ -17,39 +17,22 @@
 }
 
 .portraitFrame {
-  position: relative;
   margin: 0;
   justify-self: center;
   width: min(100%, 24rem);
   aspect-ratio: 4 / 5;
-  display: grid;
-  place-items: center;
+  overflow: hidden;
   border-radius: 999px 999px var(--radius-l) var(--radius-l);
-  background: linear-gradient(180deg, var(--tint-mist), var(--lavender) 60%, var(--blush));
-  box-shadow: inset 0 0 0 10px rgb(247 244 239 / 0.6), var(--shadow-soft);
+  background: var(--tint-lavender);
+  box-shadow: var(--shadow-soft);
 }
 
-/* The only photo we have is 240px — shown at native size until a real one arrives. */
 .portraitFrame img {
-  width: min(60%, 240px);
-  aspect-ratio: 1;
+  display: block;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
-  border-radius: 50%;
-  box-shadow: 0 0 0 6px rgb(247 244 239 / 0.7);
-}
-
-.portraitNote {
-  position: absolute;
-  bottom: var(--space-m);
-  padding: 0.15em 0.7em;
-  border: 1px dashed var(--rose-mauve);
-  border-radius: 999px;
-  background: rgb(247 244 239 / 0.85);
-  font-size: 0.7rem;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: #9a5470;
+  object-position: center 8%;
 }
 
 .introText {

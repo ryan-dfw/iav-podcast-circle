@@ -99,7 +99,15 @@ export function HomeHero() {
         </div>
 
         <div className={styles.portrait}>
-          <img src={hero.portrait.src} alt={hero.portrait.alt} width={hero.portrait.width} height={hero.portrait.height} />
+          <img
+            src={hero.portrait.src}
+            srcSet={`${hero.portrait.thumb.src} ${hero.portrait.thumb.width}w, ${hero.portrait.src} ${hero.portrait.width}w`}
+            sizes="(min-width: 52rem) 32rem, 90vw"
+            alt={hero.portrait.alt}
+            width={hero.portrait.width}
+            height={hero.portrait.height}
+            fetchPriority="high"
+          />
         </div>
       </div>
     </section>

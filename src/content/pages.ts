@@ -1,3 +1,4 @@
+import type { RichText } from './types';
 /**
  * Page copy.
  *
@@ -21,8 +22,13 @@ export const homeCopy = {
       cta: 'Send me the free kit',
     },
     latestStory: 'or hear the latest story →',
-    // Placeholder until the client supplies a high-res photo: point src at it (4:5 works best).
-    portrait: { src: '/images/portrait-placeholder.svg', alt: '', width: 400, height: 500 },
+    portrait: {
+      src: '/images/isha-vazquez.webp',
+      thumb: { src: '/images/isha-vazquez_thumb.webp', width: 640 },
+      alt: 'Portrait of Isha Vazquez, the host.',
+      width: 1600,
+      height: 2400,
+    },
   },
 };
 
@@ -119,16 +125,18 @@ export const bookCopy = {
     height: 1800,
     alt: 'Cover of Talent Within by I. A. Vazquez: a leaf-shaped pendant hanging from a single thread, holding a childhood photo, above the title.',
   },
-  // Lorem ipsum until the client supplies the real description, release details and purchase link.
-  sample: true,
+  // Back-cover copy, supplied by the client.
   description: [
-    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua, ut enim ad minim veniam quis nostrud.',
-    'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt.',
+    'For years, she kept moving. Through a divorce that cost her home, her finances, and the family life she knew. Through her children’s hardest seasons, through rejection, fear, and a loneliness that followed her from room to room. She held her career together and held herself together, because stopping never felt like an option.',
+    'Then came the hospital room. Her son lay beside her after a car struck him on the highway, and no one could tell her who he would be when he woke. With nothing left to give, she asked God the question she had carried for years: What more do you want from me?',
+    'The answer led her back to a moment she had never spoken about, and to a gift she had spent a lifetime overlooking.',
+    'Talent Within is the story of what blooms in the darkest season, and an invitation to find what is waiting in yours. Every one of us carries a gift. It is often so quiet that we miss it, until the moment it is all we have left.',
   ],
+  detailsSample: true,
   details: [
-    { label: 'Release', value: 'Lorem ipsum 2027' },
-    { label: 'Format', value: 'Dolor sit amet' },
-    { label: 'Available at', value: 'Consectetur adipiscing' },
+    { label: 'Release', value: 'Coming 2027' },
+    { label: 'Format', value: 'Hardcover, Paperback, eBook and Audiobook' },
+    { label: 'Available at', value: 'Announcement coming soon' },
   ],
   cta: 'Get the book',
 };
@@ -136,9 +144,14 @@ export const bookCopy = {
 /** "The book, in progress" early-reader signup, from the homepage mockup (ex/Homepage-html). */
 export const bookSignupCopy = {
   eyebrow: 'The book, in progress',
-  title: 'The talent that carries us through our darkest chapters.',
-  // Mockup reads "leading teams"; confirm with the client.
-  body: 'These stories — together with what I learned leading teams in corners of the world most people never see — are becoming a book. Join the list to read early chapters first and help shape it.',
+  // Title, body and prompt supplied by the client; italics are hers.
+  title: ['Every butterfly begins ', { em: 'in the dark' }, '.'] as RichText,
+  body: [
+    'After years of carrying everything, I found myself in a hospital room beside my son, asking God what more He wanted from me. What came next changed my life. ',
+    { em: 'Talent Within' },
+    ' is the story of the gift I’d overlooked for years, and an invitation to find yours.',
+  ] as RichText,
+  prompt: 'Be the first to read the opening chapter.',
   emailLabel: 'Email for early chapters',
   placeholder: 'Your email address',
   cta: 'Read it first',

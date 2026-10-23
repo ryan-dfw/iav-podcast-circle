@@ -25,7 +25,7 @@
 }
 
 .body {
-  margin: 0 0 28px;
+  margin: 0 0 var(--space-s);
   font-size: 18px;
   line-height: 1.7;
   color: var(--navy);
@@ -86,4 +86,10 @@
 
 .notice[data-tone='error'] {
   color: #8a2f4c;
+}
+
+.prompt {
+  margin: 0 0 28px;
+  font-weight: 500;
+  color: var(--color-muted);
 }

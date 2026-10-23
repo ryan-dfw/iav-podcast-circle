@@ -1,6 +1,7 @@
 import { useId, useState, type FormEvent } from 'react';
 import { bookSignupCopy as copy } from '@/content';
 import { isNewsletterConnected, subscribeToNewsletter } from '@/services/newsletter';
+import { RichText } from '@/lib/RichText';
 import styles from './BookSignup.module.css';
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -45,9 +46,12 @@ export function BookSignup() {
       <div className={`container ${styles.inner}`}>
         <p className={styles.eyebrow}>{copy.eyebrow}</p>
         <h2 id={titleId} className={styles.title}>
-          {copy.title}
+          <RichText value={copy.title} />
         </h2>
-        <p className={styles.body}>{copy.body}</p>
+        <p className={styles.body}>
+          <RichText value={copy.body} />
+        </p>
+        <p className={styles.prompt}>{copy.prompt}</p>
 
         <form className={styles.form} onSubmit={onSubmit} noValidate aria-label="Book early-reader list">
           <label htmlFor={inputId} className="visually-hidden">

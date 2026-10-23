@@ -177,7 +177,7 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center 30%;
+  object-position: center 20%;
 }
 
 /* The shared "not implemented" cross is white; on the pale blush button it needs to be navy to read. */

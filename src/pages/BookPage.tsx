@@ -29,16 +29,16 @@ export function BookPage() {
           </h1>
           <p className={styles.subtitle}>{book.subtitle}</p>
           <p className={styles.author}>By {book.author}</p>
-          {book.sample && (
-            <p>
-              <SampleBadge />
-            </p>
-          )}
           {book.description.map((p) => (
             <p key={p} className={styles.description}>
               {p}
             </p>
           ))}
+          {book.detailsSample && (
+            <p>
+              <SampleBadge />
+            </p>
+          )}
           <dl className={styles.details}>
             {book.details.map((d) => (
               <div key={d.label}>
