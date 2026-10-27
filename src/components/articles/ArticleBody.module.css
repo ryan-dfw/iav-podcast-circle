@@ -20,6 +20,16 @@
   color: var(--navy);
 }
 
+/* Small accent rule above each section heading, echoing the client's reference. */
+.heading::before {
+  content: '';
+  display: block;
+  width: 2.5rem;
+  height: 2px;
+  margin-bottom: var(--space-s);
+  background: var(--rose-mauve);
+}
+
 .paragraph {
   margin: 0 0 var(--space-m);
   font-family: var(--font-reading);
@@ -28,13 +38,15 @@
   color: var(--charcoal);
 }
 
-/* Drop cap on the opening paragraph */
-.first .paragraph::first-letter {
+/* Drop cap on the opening paragraph — a span around just the literal first
+   character, not CSS `::first-letter` (which pulls in attached punctuation,
+   e.g. the apostrophe in "I've", and enlarges it along with the letter). */
+.dropcap {
   float: left;
-  margin: 0.06em 0.12em 0 0;
+  margin: 0.02em 0.1em 0 0;
   font-family: var(--font-serif);
   font-size: 4.6em;
-  line-height: 0.78;
+  line-height: 0.74;
   color: var(--navy);
 }
 
@@ -42,7 +54,7 @@
 .pull {
   margin: var(--space-l) 0;
   padding: var(--space-m) var(--space-s);
-  border-block: 1px solid var(--navy);
+  border-block: 2px solid var(--rose-mauve);
   text-align: center;
 }
 
@@ -85,4 +97,146 @@
   font-size: 1.1rem;
   font-style: italic;
   color: var(--color-muted);
+}
+
+/* Reflective question, set apart from the narrative */
+.ask {
+  margin: var(--space-m) 0 0 !important;
+  padding: 0.15rem 0 0.15rem var(--space-m);
+  border-left: 3px solid var(--lavender);
+  font-family: var(--font-reading);
+  font-style: italic;
+  color: var(--slate-blue);
+}
+
+/* A mentor's/third party's remark — distinct from the article's own pull quotes */
+.mentor {
+  margin: var(--space-m) 0;
+  padding-left: var(--space-m);
+  border-left: 3px solid var(--rose-mauve);
+}
+
+.mentor p {
+  margin: 0;
+  font-family: var(--font-reading);
+  font-style: italic;
+  font-size: 1.2rem;
+  line-height: 1.6;
+  color: var(--navy);
+}
+
+.mentor cite {
+  display: block;
+  margin-top: var(--space-xs);
+  font-family: var(--font-sans);
+  font-style: normal;
+  font-size: 0.85rem;
+  color: var(--color-muted);
+}
+
+/* "Stages in this essay" outline, with the current stage marked */
+.toc {
+  margin: var(--space-l) 0;
+  padding: var(--space-m) var(--space-l);
+  border: 1px solid var(--color-rule);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+.tocTitle {
+  margin: 0 0 var(--space-s);
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--slate-blue);
+}
+
+.toc ol {
+  margin: 0;
+  padding-left: 1.3rem;
+  font-family: var(--font-reading);
+  font-size: 1.05rem;
+  line-height: 1.9;
+  color: var(--charcoal);
+}
+
+.tocHere {
+  font-weight: 600;
+}
+
+.tocBadge {
+  margin-left: 0.5em;
+  padding: 0.1em 0.55em;
+  border-radius: var(--radius);
+  background: var(--blush);
+  font-family: var(--font-sans);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* Closing signature on a personal note */
+.signature {
+  display: flex;
+  align-items: center;
+  gap: var(--space-s);
+  margin-top: var(--space-l);
+}
+
+.signature img {
+  flex: none;
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center 18%;
+  border: 2px solid var(--blush);
+}
+
+.signatureLine {
+  margin: 0;
+  font-family: var(--font-reading);
+  font-style: italic;
+  font-size: 1.05rem;
+  color: var(--color-muted);
+}
+
+.signatureName {
+  margin: 0.1rem 0 0;
+  font-family: var(--font-script);
+  font-size: 2.2rem;
+  line-height: 1;
+  color: var(--navy);
+}
+
+/* Inline figure — bleeds past the text column on wide viewports, as in the
+   client's reference page. */
+.inlineFigure {
+  margin: var(--space-l) 0;
+}
+
+.inlineFigure img {
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--color-rule);
+  border-radius: var(--radius);
+}
+
+.inlineFigure figcaption {
+  margin-top: var(--space-xs);
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 0.85rem;
+  line-height: 1.45;
+  color: var(--color-muted);
+}
+
+@media (min-width: 56rem) {
+  .inlineFigure {
+    margin-inline: -3.75rem;
+  }
 }

@@ -16,7 +16,7 @@
  * Inline rich text. A plain string, or a list of runs so editorial copy can
  * carry emphasis (e.g. a book title in italics) without embedding HTML.
  */
-export type InlineRun = string | { em: string } | { strong: string };
+export type InlineRun = string | { em: string } | { strong: string } | { link: string; href: string };
 export type RichText = string | InlineRun[];
 
 export interface ImageAsset {
@@ -103,6 +103,38 @@ export interface Episode {
 }
 
 /* ------------------------------------------------------------------ */
+/* Quotes                                                              */
+/* ------------------------------------------------------------------ */
+
+/**
+ * A short quote from Isha, published as a numbered series alongside the
+ * articles. Each one is a small fixed template rather than free-form blocks:
+ * the quote itself, an optional note on what's behind it, and an optional
+ * prompt. Keeping it a template means she can later fill the same four fields
+ * in a form without anyone writing markup.
+ */
+export interface Quote extends MaybeSample {
+  /** Her own numbering ("No. 1"). */
+  number: number;
+  /** ISO date (YYYY-MM-DD). */
+  publishedOn: string;
+  /** Small line above the number, e.g. "A quote from Isha to start your day". */
+  label?: string;
+  /**
+   * The quote's opening line, as separate beats set large on the card
+   * ("Wait." / "Think." / "Move."). Trailing punctuation is rendered in the
+   * accent colour. A single-element array is simply one line.
+   */
+  beats: string[];
+  /** The softer line under the beats. */
+  rest?: string;
+  /** "The thought behind it" — a paragraph or two in her voice. */
+  thought?: string[];
+  /** "Try it today" — one concrete thing to do. */
+  tryIt?: string;
+}
+
+/* ------------------------------------------------------------------ */
 /* Resources                                                           */
 /* ------------------------------------------------------------------ */
 
@@ -156,7 +188,24 @@ export interface Benefit extends MaybeSample {
  * pull quote set off by rules. Everything here is plain JSON-serialisable, so
  * a submission form / database (e.g. Firestore) can store an `Article` as-is.
  */
-export type ArticleBlock = EpisodeBlock | { type: 'pull'; text: string };
+export interface ArticleTocItem {
+  label: string;
+  /** Marks the stage the reader is on now. */
+  current?: boolean;
+}
+
+export type ArticleBlock =
+  | EpisodeBlock
+  | { type: 'pull'; text: string }
+  | { type: 'figure'; image: ImageAsset; caption?: string }
+  /** A short reflective question, set off from the body text. */
+  | { type: 'ask'; text: string }
+  /** A quoted remark from someone other than the author or episode guest. */
+  | { type: 'mentor'; text: string; attribution?: string }
+  /** A labelled outline of the piece's stages/sections, with the current one marked. */
+  | { type: 'toc'; title: string; items: ArticleTocItem[] }
+  /** Closing signature for a personal note — a short line plus the author's first name. */
+  | { type: 'signature'; line: string; name: string };
 
 export interface ArticleSection {
   /** Omit for the opening section, which has no heading. */
@@ -171,6 +220,14 @@ export interface Article extends MaybeSample {
   category: string;
   /** Optional topic shown after the category, e.g. "Reinvention". */
   topic?: string;
+  /**
+   * Presentation mode. `'essay'` (default) is the standard article template.
+   * `'note'` is a shorter, more personal piece — e.g. a journal entry — framed
+   * in its own card instead of the standard kicker/byline header.
+   */
+  format?: 'essay' | 'note';
+  /** For `format: 'note'`, the small label shown above the title (e.g. "A Note from Isha's Desk"). */
+  noteLabel?: string;
   title: string;
   /** Standfirst under the title; also used on cards and in metadata. */
   dek: string;

@@ -10,7 +10,9 @@ import { episodes } from './episodes';
 import { resourceCategories } from './resources';
 import { events, memberBenefits, monthlyThemes } from './circle';
 import { articles } from './articles';
-import type { Article, CircleEvent, Episode, ResourceCategory } from './types';
+import { quotes } from './quotes';
+import { padWithLipsum } from './quotes/lipsum';
+import type { Article, CircleEvent, Episode, Quote, ResourceCategory, RichText } from './types';
 
 export * from './pages';
 export { circleIntro, nominateCopy } from './circle';
@@ -76,10 +78,36 @@ export function getArticle(slug: string): Article | undefined {
 
 export const articlePath = (a: Pick<Article, 'slug'>) => `/articles/${a.slug}`;
 
+/* Quotes ------------------------------------------------------------ */
+
+/**
+ * How many quotes the series should show. Until the client has written that
+ * many, the shortfall is filled with generated placeholders so the design can
+ * be judged — and so the layout is exercised at its real size rather than with
+ * a single card.
+ */
+export const QUOTES_WANTED = 4;
+
+/** All quotes, real ones (newest first) topped up with marked placeholders. */
+export function getQuotes(): Quote[] {
+  const real = [...quotes].sort((a, b) => b.number - a.number);
+  return padWithLipsum(real, QUOTES_WANTED);
+}
+
+export function getQuote(number: number): Quote | undefined {
+  return getQuotes().find((q) => q.number === number);
+}
+
+export const quotesPath = '/articles/quotes';
+
 /** Rough reading time from the body text, in whole minutes (minimum 1). */
 export function readingMinutes(article: Article): number {
-  const flat = (t: string | Array<string | { em: string } | { strong: string }>) =>
-    typeof t === 'string' ? t : t.map((r) => (typeof r === 'string' ? r : 'em' in r ? r.em : r.strong)).join('');
+  const flat = (t: RichText): string =>
+    typeof t === 'string'
+      ? t
+      : t
+          .map((r) => (typeof r === 'string' ? r : 'em' in r ? r.em : 'strong' in r ? r.strong : r.link))
+          .join('');
   const words = article.sections
     .flatMap((s) => s.blocks.map((b) => flat('text' in b ? b.text : '')))
     .join(' ')

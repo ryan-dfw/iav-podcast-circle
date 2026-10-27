@@ -1,8 +1,10 @@
 import { useMemo, useState } from 'react';
-import { getArticles } from '@/content';
+import { Link } from 'react-router-dom';
+import { getArticles, getQuotes, quotesPath } from '@/content';
 import { usePageMeta } from '@/hooks/usePageMeta';
-import { SectionHeading } from '@/components/ui/Section';
+import { Section, SectionHeading } from '@/components/ui/Section';
 import { ArticleCard } from '@/components/articles/ArticleCard';
+import { QuoteCard } from '@/components/quotes/QuoteCard';
 import styles from './articles.module.css';
 
 const PAGE_SIZE = 9;
@@ -12,6 +14,8 @@ const ALL = 'All';
 export function ArticlesPage() {
   usePageMeta({ title: 'Articles', description: 'Essays and reflections from Isha Vazquez.' });
   const all = getArticles();
+  const quotes = getQuotes();
+  const [latestQuote, ...earlierQuotes] = quotes;
   const categories = useMemo(() => [ALL, ...Array.from(new Set(all.map((a) => a.category)))], [all]);
   const [category, setCategory] = useState(ALL);
   const [shown, setShown] = useState(PAGE_SIZE);
@@ -75,6 +79,27 @@ export function ArticlesPage() {
           <p className={styles.empty}>New articles are on the way.</p>
         )}
       </div>
+
+      {latestQuote && (
+        <Section tone="surface" tight labelledBy="quotes-band-title">
+          <div className={`container ${styles.quotes}`}>
+            <h2 id="quotes-band-title" className={styles.quotesTitle}>
+              Quotes
+            </h2>
+            <QuoteCard quote={latestQuote} headingLevel={3} />
+            {earlierQuotes.length > 0 && (
+              <div className={styles.quotesStrip}>
+                {earlierQuotes.slice(0, 3).map((quote) => (
+                  <QuoteCard key={quote.number} quote={quote} headingLevel={3} compact />
+                ))}
+              </div>
+            )}
+            <p className={styles.quotesMore}>
+              <Link to={quotesPath}>All quotes →</Link>
+            </p>
+          </div>
+        </Section>
+      )}
     </>
   );
 }

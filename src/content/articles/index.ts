@@ -1,6 +1,7 @@
 import type { Article } from '../types';
 import { iBidOnMyself } from './i-bid-on-myself';
-import { sampleArticles } from './samples';
+import { theHeroWasNeverWhoIThought } from './the-hero-was-never-who-i-thought';
+import { isThisTheYearTheTortoiseLoses } from './is-this-the-year-the-tortoise-loses';
 
 /**
  * Article registry. To publish an article:
@@ -10,4 +11,4 @@ import { sampleArticles } from './samples';
  * automatically. Later, a submission form + database can fill the same
  * `Article` shape; only `getArticles()` in `content/index.ts` needs to change.
  */
-export const articles: Article[] = [iBidOnMyself, ...sampleArticles];
+export const articles: Article[] = [isThisTheYearTheTortoiseLoses, theHeroWasNeverWhoIThought, iBidOnMyself];

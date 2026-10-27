@@ -13,6 +13,8 @@ dist/
 .netlify/
 
 notes/
+png_in/
+ref/
 
 # Transfer archives
 *.tgz
@@ -29,5 +31,3 @@ Thumbs.db
 .idea/
 *.swp
 
-# Source images (originals before web conversion)
-png_in/
