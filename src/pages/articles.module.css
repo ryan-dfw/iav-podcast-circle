@@ -228,6 +228,25 @@
   pointer-events: none;
 }
 
+.noteFigure {
+  margin: calc(-1 * var(--space-xl)) calc(-1 * var(--space-l)) var(--space-l);
+}
+
+.noteFigure img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 20rem;
+  object-fit: cover;
+}
+
+.noteFigure figcaption {
+  margin-top: var(--space-xs);
+  padding-inline: var(--space-l);
+  font-size: 0.85rem;
+  color: var(--color-muted);
+}
+
 .noteLabel {
   display: flex;
   align-items: center;

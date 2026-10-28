@@ -125,6 +125,27 @@
   background: var(--cream);
 }
 
+/* From tablet width up, the open menu floats over the page instead of
+   pushing it down — a tall link list shouldn't shove everything below
+   the header out of the way. It's sized to its links, not the full row:
+   a dropdown panel, not another full-width bar. */
+@media (min-width: 48rem) {
+  .mobileNav {
+    position: absolute;
+    left: 0;
+    top: 100%;
+    width: max-content;
+    max-width: calc(100vw - 2 * var(--gutter));
+    box-shadow: var(--shadow-soft);
+  }
+
+  .mobileNav ul {
+    width: auto;
+    margin-inline: 0;
+    padding-inline: var(--space-l);
+  }
+}
+
 .mobileNav ul {
   list-style: none;
   padding-block: var(--space-s) var(--space-m);

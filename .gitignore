@@ -15,6 +15,7 @@ dist/
 notes/
 png_in/
 ref/
+deleteme/
 
 # Transfer archives
 *.tgz

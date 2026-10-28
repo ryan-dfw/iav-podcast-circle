@@ -14,6 +14,14 @@ export const isThisTheYearTheTortoiseLoses: Article = {
   author: 'Isha Vazquez',
   publishedOn: '2026-10-24',
 
+  heroImage: {
+    src: '/articles/is-this-the-year-the-tortoise-loses/hero.webp',
+    alt: 'A painted illustration of a handwritten note on lined paper, titled "From Isha\'s desk," with a pen resting beside it.',
+    width: 1600,
+    height: 900,
+    thumb: { src: '/articles/is-this-the-year-the-tortoise-loses/hero_thumb.webp', width: 720 },
+  },
+
   sections: [
     {
       blocks: [

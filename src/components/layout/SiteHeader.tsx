@@ -44,9 +44,13 @@ export function SiteHeader() {
     if (!el) return;
     const root = document.documentElement;
     // The bar only — an open mobile menu shouldn't drag the page around.
+    // From 48rem up the open menu is an absolutely positioned overlay (see
+    // SiteHeader.module.css), so it no longer adds to el.offsetHeight at all —
+    // only subtract its height here while it's still in normal flow.
     const set = () => {
       const menu = menuRef.current;
-      const menuH = menu && !menu.hidden ? menu.offsetHeight : 0;
+      const menuInFlow = menu && !menu.hidden && getComputedStyle(menu).position === 'static';
+      const menuH = menuInFlow ? menu.offsetHeight : 0;
       root.style.setProperty('--header-h', `${el.offsetHeight - menuH}px`);
     };
     set();

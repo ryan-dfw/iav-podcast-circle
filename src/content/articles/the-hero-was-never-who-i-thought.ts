@@ -13,6 +13,14 @@ export const theHeroWasNeverWhoIThought: Article = {
   author: 'Isha Vazquez',
   publishedOn: '2026-10-23',
 
+  heroImage: {
+    src: '/articles/the-hero-was-never-who-i-thought/hero.webp',
+    alt: 'Painted portrait of Isha pausing at her desk, glasses in hand, looking down in thought.',
+    width: 1600,
+    height: 900,
+    thumb: { src: '/articles/the-hero-was-never-who-i-thought/hero_thumb.webp', width: 720 },
+  },
+
   sections: [
     {
       blocks: [

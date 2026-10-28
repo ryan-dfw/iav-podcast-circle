@@ -15,7 +15,7 @@ import { padWithLipsum } from './quotes/lipsum';
 import type { Article, CircleEvent, Episode, Quote, ResourceCategory, RichText } from './types';
 
 export * from './pages';
-export { circleIntro, nominateCopy } from './circle';
+export { circleIntro } from './circle';
 export { primaryNav } from './navigation';
 export type * from './types';
 
@@ -81,12 +81,13 @@ export const articlePath = (a: Pick<Article, 'slug'>) => `/articles/${a.slug}`;
 /* Quotes ------------------------------------------------------------ */
 
 /**
- * How many quotes the series should show. Until the client has written that
- * many, the shortfall is filled with generated placeholders so the design can
- * be judged — and so the layout is exercised at its real size rather than with
- * a single card.
+ * How many quotes the series should show. The expansion-with-placeholders
+ * design was approved against a target of 4, but the band now shows real
+ * quotes only (no generated placeholders) — set back to the client's actual
+ * count. Raise this again if the design needs exercising at full size before
+ * she's written that many; padWithLipsum below still fills any shortfall.
  */
-export const QUOTES_WANTED = 4;
+export const QUOTES_WANTED = quotes.length;
 
 /** All quotes, real ones (newest first) topped up with marked placeholders. */
 export function getQuotes(): Quote[] {

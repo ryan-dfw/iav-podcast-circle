@@ -27,6 +27,19 @@ export function ArticlePage() {
       {isNote ? (
         <div className={`container-narrow ${styles.noteWrap}`}>
           <div className={styles.noteCard}>
+            {article.heroImage && (
+              <figure className={styles.noteFigure}>
+                <img
+                  src={defaultSrc(article.heroImage)}
+                  srcSet={srcSetFor(article.heroImage)}
+                  sizes="(max-width: 48rem) 100vw, 47.5rem"
+                  alt={article.heroImage.alt}
+                  width={article.heroImage.width}
+                  height={article.heroImage.height}
+                />
+                {article.heroCaption && <figcaption>{article.heroCaption}</figcaption>}
+              </figure>
+            )}
             <p className={styles.noteLabel}>
               {article.noteLabel ?? article.category}
               {article.sample && <SampleBadge />}

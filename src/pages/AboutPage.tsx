@@ -1,12 +1,9 @@
-import { aboutCopy, getEpisodes, newsletterCopy, podcastCopy } from '@/content';
+import { aboutCopy, getEpisodes, podcastCopy } from '@/content';
 import { mailto, site } from '@/config/site';
 import { usePageMeta } from '@/hooks/usePageMeta';
 import { ButtonLink } from '@/components/ui/Button';
-import { Placeholder } from '@/components/ui/Placeholder';
 import { EpisodeCard } from '@/components/podcast/EpisodeCard';
 import { JoinCircleButton } from '@/components/circle/JoinCircleButton';
-import { NewsletterSignup } from '@/components/newsletter/NewsletterSignup';
-import { Section } from '@/components/ui/Section';
 import styles from './AboutPage.module.css';
 
 export function AboutPage() {
@@ -57,7 +54,7 @@ export function AboutPage() {
         </div>
       </section>
 
-      {/* 2. Why — her line, the one-line mission, and her story (to come) */}
+      {/* 2. Why — her line and the one-line mission */}
       <section className={styles.why} aria-labelledby="why-title">
         <div className={`container-narrow ${styles.whyInner}`}>
           <h2 id="why-title" className={styles.h2}>
@@ -67,7 +64,6 @@ export function AboutPage() {
             <p>“{c.why.statement}”</p>
           </blockquote>
           <p className={styles.mission}>{c.why.mission}</p>
-          <Placeholder>{c.why.storyPlaceholder}</Placeholder>
         </div>
       </section>
 
@@ -85,18 +81,7 @@ export function AboutPage() {
         </div>
       </section>
 
-      {/* 4. Newsletter (folded in from the old Newsletter page) */}
-      <Section tone="blush">
-        <div className="container" id="newsletter">
-          <NewsletterSignup
-            source="about-page"
-            title={newsletterCopy.title}
-            subtitle={newsletterCopy.subtitle}
-          />
-        </div>
-      </Section>
-
-      {/* 5. Next steps */}
+      {/* 4. Next steps */}
       <section className={styles.next} aria-labelledby="next-title">
         <div className={`container ${styles.nextInner}`}>
           <h2 id="next-title" className={styles.h2}>
