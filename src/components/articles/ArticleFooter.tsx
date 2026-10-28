@@ -4,6 +4,7 @@ import type { Article } from '@/content/types';
 import { integrations } from '@/config/integrations';
 import { site } from '@/config/site';
 import { PendingLink } from '@/components/ui/PendingLink';
+import { defaultSrc, srcSetFor } from '@/lib/image';
 import styles from './ArticleFooter.module.css';
 
 /** External link: opens in a new tab and says so to assistive tech. */
@@ -26,36 +27,47 @@ export function ArticleFooter({ article }: { article: Pick<Article, 'alsoPublish
       <p className={styles.stars} aria-hidden="true">
         * * *
       </p>
-      <div className={styles.note}>
-        <p>{copy.bio}</p>
-        <p>
-          {copy.nominate}{' '}
-          {linktree ? (
-            linktree.pending ? (
-              <PendingLink>Linktree</PendingLink>
-            ) : (
-              <ExternalLink href={linktree.url}>Linktree</ExternalLink>
-            )
-          ) : (
-            'our Linktree'
-          )}{' '}
-          {copy.findShow} <ExternalLink href={integrations.youtube.channelUrl}>YouTube</ExternalLink> and{' '}
-          <ExternalLink href={integrations.spotify.showUrl}>Spotify</ExternalLink> (<span translate="no">{copy.handle}</span>
-          ).
-        </p>
-        {elsewhere.length > 0 && (
+      <aside className={styles.bio}>
+        <img
+          className={styles.bioPortrait}
+          src={defaultSrc(site.host.paintedPortrait)}
+          srcSet={srcSetFor(site.host.paintedPortrait)}
+          sizes="5.25rem"
+          alt=""
+          loading="lazy"
+          decoding="async"
+        />
+        <div className={styles.note}>
+          <p>{copy.bio}</p>
           <p>
-            Also published on{' '}
-            {elsewhere.map((p, i) => (
-              <span key={p.name}>
-                {i > 0 && ', '}
-                {p.url ? <ExternalLink href={p.url}>{p.name}</ExternalLink> : p.name}
-              </span>
-            ))}
-            .
+            {copy.nominate}{' '}
+            {linktree ? (
+              linktree.pending ? (
+                <PendingLink>Linktree</PendingLink>
+              ) : (
+                <ExternalLink href={linktree.url}>Linktree</ExternalLink>
+              )
+            ) : (
+              'our Linktree'
+            )}{' '}
+            {copy.findShow} <ExternalLink href={integrations.youtube.channelUrl}>YouTube</ExternalLink> and{' '}
+            <ExternalLink href={integrations.spotify.showUrl}>Spotify</ExternalLink> (
+            <span translate="no">{copy.handle}</span>).
           </p>
-        )}
-      </div>
+          {elsewhere.length > 0 && (
+            <p>
+              Also published on{' '}
+              {elsewhere.map((p, i) => (
+                <span key={p.name}>
+                  {i > 0 && ', '}
+                  {p.url ? <ExternalLink href={p.url}>{p.name}</ExternalLink> : p.name}
+                </span>
+              ))}
+              .
+            </p>
+          )}
+        </div>
+      </aside>
       <p className={styles.back}>
         <Link to="/articles">← All articles</Link>
       </p>

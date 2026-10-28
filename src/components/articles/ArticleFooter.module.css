@@ -5,15 +5,32 @@
 }
 
 .stars {
-  letter-spacing: 0.6em;
-  color: var(--color-muted);
+  letter-spacing: 0.8em;
+  color: var(--rose-mauve);
+}
+
+.bio {
+  display: flex;
+  gap: var(--space-m);
+  align-items: center;
+  margin-top: var(--space-m);
+  padding: var(--space-m);
+  background: var(--blush);
+  border-radius: var(--radius);
+  text-align: left;
+}
+
+.bioPortrait {
+  flex: none;
+  width: 5.25rem;
+  height: 5.25rem;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center 18%;
+  border: 2px solid var(--cream);
 }
 
 .note {
-  margin-top: var(--space-m);
-  padding-top: var(--space-m);
-  border-top: 1px solid var(--color-rule);
-  text-align: left;
   font-family: var(--font-reading);
   font-size: 1.1rem;
   font-style: italic;
@@ -23,6 +40,10 @@
 
 .note p {
   margin: 0 0 var(--space-s);
+}
+
+.note p:last-child {
+  margin-bottom: 0;
 }
 
 /* Links stay underlined (not colour alone) and darken on hover. */
@@ -40,4 +61,15 @@
 .back {
   margin-top: var(--space-l);
   text-align: left;
+}
+
+@media (max-width: 32rem) {
+  .bio {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .note {
+    text-align: center;
+  }
 }

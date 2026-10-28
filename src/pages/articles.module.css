@@ -48,7 +48,8 @@
 .listing {
   display: grid;
   gap: var(--space-l);
-  padding-bottom: var(--space-2xl);
+  /* The quotes band sits directly below and brings its own top padding. */
+  padding-bottom: var(--space-m);
 }
 
 .grid {
@@ -102,7 +103,9 @@
 
 .articleTitle {
   font-size: var(--step-4);
-  line-height: 1.05;
+  font-weight: 700;
+  line-height: 1.02;
+  letter-spacing: -0.01em;
 }
 
 .articleDek {
@@ -116,19 +119,38 @@
 }
 
 .articleByline {
-  margin-top: var(--space-m);
-  font-size: 0.9rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.4em 0.9em;
+  max-width: 34rem;
+  margin: var(--space-m) auto 0;
+  padding: var(--space-xs) 0;
+  border-block: 1px solid var(--color-rule);
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
   color: var(--color-muted);
 }
 
+.articleByline strong {
+  font-weight: 600;
+  color: var(--navy);
+}
+
 .figure {
-  width: min(100% - 2 * var(--gutter), 60rem);
+  width: min(100% - 2 * var(--gutter), 55rem);
   margin: 0 auto var(--space-xl);
 }
 
 .figure img {
   width: 100%;
   height: auto;
+  max-height: 51rem;
+  object-fit: cover;
+  object-position: center 20%;
   border-radius: var(--radius);
 }
 
@@ -136,6 +158,138 @@
   margin-top: var(--space-xs);
   font-size: 0.85rem;
   color: var(--color-muted);
+}
+
+/* Quotes band on the Articles page ----------------------------------- */
+
+.quotes {
+  display: grid;
+  gap: var(--space-l);
+}
+
+/* Just the word, then the quotes themselves. */
+.quotesTitle {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: var(--step--1);
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--slate-blue);
+  text-align: center;
+}
+
+.quotesStrip {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
+  gap: var(--space-m);
+}
+
+.quotesMore {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.quotesMore a {
+  color: var(--slate-blue);
+  text-decoration: none;
+}
+
+.quotesMore a:hover {
+  text-decoration: underline;
+  text-underline-offset: 0.25em;
+}
+
+/* "Note from Isha's Desk" format — a shorter, more personal piece in its own card. */
+.noteWrap {
+  padding-block: var(--space-xl) var(--space-l);
+}
+
+.noteCard {
+  position: relative;
+  max-width: 47.5rem;
+  margin-inline: auto;
+  padding: var(--space-xl) var(--space-l) var(--space-l);
+  background: var(--surface);
+  border: 1px solid var(--color-rule);
+  box-shadow: var(--shadow-soft);
+}
+
+.noteCard::before {
+  content: '';
+  position: absolute;
+  inset: 0.6rem;
+  border: 1px solid rgb(217 166 184 / 0.45);
+  pointer-events: none;
+}
+
+.noteFigure {
+  margin: calc(-1 * var(--space-xl)) calc(-1 * var(--space-l)) var(--space-l);
+}
+
+.noteFigure img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 20rem;
+  object-fit: cover;
+}
+
+.noteFigure figcaption {
+  margin-top: var(--space-xs);
+  padding-inline: var(--space-l);
+  font-size: 0.85rem;
+  color: var(--color-muted);
+}
+
+.noteLabel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-s);
+  margin: 0 0 var(--space-m);
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--slate-blue);
+  text-align: center;
+}
+
+.noteLabel::before,
+.noteLabel::after {
+  content: '';
+  width: 2.5rem;
+  height: 1px;
+  background: var(--rose-mauve);
+}
+
+.noteTitle {
+  font-size: var(--step-3);
+  font-weight: 700;
+  line-height: 1.1;
+  text-align: center;
+}
+
+.noteMeta {
+  margin: var(--space-s) 0 0;
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  text-align: center;
+}
+
+.noteBody {
+  margin-top: var(--space-l);
 }
 
 .moreRead {

@@ -1,0 +1,73 @@
+/* Sits in the lower-right of a quote card, so it reads as part of the artwork
+   rather than as page furniture. */
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2xs);
+}
+
+.actions {
+  display: flex;
+  gap: 0.15rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.action {
+  display: grid;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: rgb(247 244 239 / 0.75);
+  cursor: pointer;
+  transition: background-color 0.2s var(--ease), color 0.2s var(--ease);
+}
+
+.action:hover {
+  background: rgb(247 244 239 / 0.14);
+  color: var(--cream);
+}
+
+.action:focus-visible {
+  outline: 2px solid var(--blush);
+  outline-offset: 2px;
+}
+
+.action:disabled {
+  opacity: 0.5;
+  cursor: progress;
+}
+
+.action svg {
+  width: 1.1rem;
+  height: 1.1rem;
+}
+
+.feedback {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: 0.7rem;
+  letter-spacing: 0.04em;
+  color: rgb(247 244 239 / 0.75);
+  white-space: nowrap;
+}
+
+.compact .action {
+  width: 2rem;
+  height: 2rem;
+}
+
+.compact .action svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+.compact .feedback {
+  display: none;
+}

@@ -37,6 +37,8 @@
   /* Long-form reading text (articles), matching belleburden.com/about paragraphs. */
   --font-reading: 'EB Garamond', Garamond, Georgia, 'Times New Roman', serif;
   --font-sans: 'Inter Variable', 'Inter', 'Lato', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  /* Signature flourish only (e.g. the sign-off on a personal note) — never body or heading text. */
+  --font-script: 'Caveat', cursive;
 
   --step--1: clamp(0.84rem, 0.82rem + 0.1vw, 0.9rem);
   --step-0: clamp(1rem, 0.97rem + 0.15vw, 1.0625rem);

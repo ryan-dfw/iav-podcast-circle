@@ -57,8 +57,6 @@ export const aboutCopy = {
       'Discovering talented humans and preserving their gifts in a living time capsule, one conversation at a time.',
     // From the mockup — the platform mission, reduced to one line.
     mission: 'Guiding creators from discovery to development.',
-    storyPlaceholder:
-      'Isha’s story, in her words: how nutrition coaching, neuropsychology and podcasting led her to amplifying talent. Three to five sentences.',
   },
   work: {
     title: 'Conversations so far',
@@ -80,8 +78,8 @@ export const podcastCopy = {
   lead: 'Intimate interviews with talented people, captured in their raw, human state — before the world meets them.',
   guest: {
     title: 'Be a Guest',
-    body: 'Have a story or a gift the world should meet? We’d love to hear from you.',
-    cta: 'Be a Guest',
+    body: 'Have a story to share, or know someone whose gift the world should meet? Reach out — whether it’s you or someone you’re nominating.',
+    cta: 'Get in Touch',
   },
 };
 

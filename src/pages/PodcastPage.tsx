@@ -1,13 +1,13 @@
-import { getEpisodes, nominateCopy, podcastCopy } from '@/content';
+import { getEpisodes, podcastCopy } from '@/content';
 import { integrations } from '@/config/integrations';
-import { site } from '@/config/site';
+import { mailto, site } from '@/config/site';
 import { usePageMeta } from '@/hooks/usePageMeta';
 import { useLatestVideos } from '@/hooks/useLatestVideos';
 import { Section, SectionHeading } from '@/components/ui/Section';
 import { EpisodeCard } from '@/components/podcast/EpisodeCard';
 import { VideoCard } from '@/components/podcast/VideoCard';
 import { HumanCapsule } from '@/components/podcast/HumanCapsule';
-import { SampleButton } from '@/components/ui/SampleButton';
+import { ButtonLink } from '@/components/ui/Button';
 import styles from './pages.module.css';
 
 const LATEST_COUNT = 3;
@@ -61,10 +61,9 @@ export function PodcastPage() {
         <div className={`container-narrow ${styles.centerStack}`}>
           <SectionHeading id="guest-title" title={podcastCopy.guest.title} subtitle={podcastCopy.guest.body} />
           <div className={styles.guestActions}>
-            <SampleButton showNote={false}>{podcastCopy.guest.cta}</SampleButton>
-            <SampleButton variant="mauve" showNote={false}>
-              {nominateCopy.cta}
-            </SampleButton>
+            <ButtonLink to={mailto('Be a Guest — IAV Podcast Circle')} variant="mauve">
+              {podcastCopy.guest.cta}
+            </ButtonLink>
           </div>
         </div>
       </Section>

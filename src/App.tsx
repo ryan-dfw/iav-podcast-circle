@@ -8,6 +8,7 @@ import { EpisodePage } from '@/pages/EpisodePage';
 import { BookPage } from '@/pages/BookPage';
 import { ArticlesPage } from '@/pages/ArticlesPage';
 import { ArticlePage } from '@/pages/ArticlePage';
+import { QuotesPage } from '@/pages/QuotesPage';
 import { CirclePage } from '@/pages/CirclePage';
 import { NotFoundPage } from '@/pages/NotFoundPage';
 
@@ -25,6 +26,8 @@ export function App() {
           <Route path="podcast" element={<PodcastPage />} />
           <Route path="podcast/:slug" element={<EpisodePage />} />
           <Route path="articles" element={<ArticlesPage />} />
+          {/* Static segment before :slug — an article may not use the slug "quotes". */}
+          <Route path="articles/quotes" element={<QuotesPage />} />
           <Route path="articles/:slug" element={<ArticlePage />} />
           <Route path="about" element={<AboutPage />} />
           <Route path="book" element={<BookPage />} />

@@ -47,15 +47,3 @@ export const events: CircleEvent[] = [
     description: 'Placeholder event used to preview the calendar layout.',
   },
 ];
-
-/**
- * Guest nomination call-to-action. The button is not wired up yet. Planned: a
- * form where the visitor gives another person's contact details and a short
- * story about them; submissions will be stored (and tracked) separately later.
- */
-export const nominateCopy = {
-  eyebrow: 'Know a silent angel?',
-  title: 'Nominate someone.',
-  body: 'The best guests are the people no one thinks to interview. If someone in your life is quietly surviving and thriving, I want to meet them.',
-  cta: 'Nominate a guest',
-};

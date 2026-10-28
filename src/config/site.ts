@@ -48,6 +48,14 @@ export const site = {
     },
     signatureLine:
       'Discovering talented humans and preserving their gifts in a living time capsule, one conversation at a time.',
+    /** Painted portrait (with Joaquin) used in article bios and sign-offs — distinct from the photographic `portrait` above. */
+    paintedPortrait: {
+      src: '/images/isha-vazquez-painted.webp',
+      thumb: { src: '/images/isha-vazquez-painted_thumb.webp', width: 320 },
+      alt: '',
+      width: 733,
+      height: 733,
+    },
   },
 
   podcast: {

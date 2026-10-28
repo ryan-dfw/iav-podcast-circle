@@ -1,0 +1,61 @@
+/* The single-quote page is gone — a quote turns over in place instead — so what
+   remains here is the index and its footer navigation. */
+
+/* Index listing ------------------------------------------------------ */
+
+.intro {
+  padding-block: var(--space-xl) var(--space-l);
+  text-align: center;
+}
+
+.title {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: var(--step--1);
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--slate-blue);
+}
+
+.list {
+  display: grid;
+  gap: var(--space-l);
+  padding-bottom: var(--space-l);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+  gap: var(--space-m);
+}
+
+.empty {
+  text-align: center;
+  color: var(--color-muted);
+}
+
+/* Footer navigation -------------------------------------------------- */
+
+.footerNav {
+  padding-block: var(--space-xl) var(--space-2xl);
+}
+
+.back {
+  margin: var(--space-m) 0 0;
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.back a {
+  color: var(--slate-blue);
+  text-decoration: none;
+}
+
+.back a:hover {
+  text-decoration: underline;
+  text-underline-offset: 0.25em;
+}
