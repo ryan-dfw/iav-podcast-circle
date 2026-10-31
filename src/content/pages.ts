@@ -22,12 +22,13 @@ export const homeCopy = {
       cta: 'Send me the free kit',
     },
     latestStory: 'or hear the latest story →',
+    bookConsultation: 'Book a Consultation',
     portrait: {
       src: '/images/isha-vazquez.webp',
       thumb: { src: '/images/isha-vazquez_thumb.webp', width: 640 },
       alt: 'Portrait of Isha Vazquez, the host.',
-      width: 1600,
-      height: 2400,
+      width: 1080,
+      height: 1620,
     },
   },
 };

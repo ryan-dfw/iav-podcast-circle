@@ -2,11 +2,11 @@ import { integrations } from '@/config/integrations';
 import { ButtonLink } from '@/components/ui/Button';
 import { SampleButton } from '@/components/ui/SampleButton';
 
-type Variant = 'primary' | 'mauve' | 'periwinkle';
+type Variant = 'primary' | 'mauve' | 'periwinkle' | 'blush';
 
 /**
- * "Join the Circle". Links to `integrations.circle.joinUrl` once membership is
- * real; until then it's a non-functional draft button with the white X.
+ * "Join the Circle" — links to `integrations.circle.joinUrl`. Falls back to a
+ * non-functional draft button with the white X if that's ever unset again.
  */
 export function JoinCircleButton({ variant = 'primary' }: { variant?: Variant }) {
   const { joinUrl } = integrations.circle;

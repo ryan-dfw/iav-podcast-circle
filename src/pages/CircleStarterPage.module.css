@@ -1,0 +1,324 @@
+.page {
+  padding-block: var(--space-2xl);
+}
+
+.pageInner {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 42vh;
+}
+
+/* Gate + loading ----------------------------------------------------------- */
+
+.loading {
+  text-align: center;
+  color: var(--color-muted);
+}
+
+.gate {
+  display: grid;
+  gap: var(--space-s);
+  text-align: center;
+  justify-items: center;
+}
+
+.gateLead {
+  max-width: 34rem;
+  margin-top: var(--space-xs);
+  color: var(--color-muted);
+}
+
+.gateForm {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-xs);
+  width: 100%;
+  max-width: 34rem;
+  margin-top: var(--space-s);
+}
+
+.gateInput {
+  flex: 1 1 11rem;
+  min-height: 2.9rem;
+  padding: 0 1rem;
+  border: 1px solid var(--color-rule);
+  border-radius: var(--radius);
+  background: var(--cream);
+  font: inherit;
+  color: var(--charcoal);
+}
+
+.gateInput:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+.gateNotice {
+  min-height: 1.5em;
+  max-width: 30rem;
+  font-size: 0.9rem;
+  color: var(--color-muted);
+}
+
+.gateNotice[data-tone='error'] {
+  color: #9a5470;
+}
+
+.gateNotice[data-tone='sent'] {
+  color: var(--slate-blue);
+}
+
+/* Cover ------------------------------------------------------------------ */
+
+.cover {
+  display: grid;
+  gap: var(--space-s);
+  text-align: center;
+  justify-items: center;
+}
+
+.coverTitle {
+  max-width: 28rem;
+  margin: var(--space-xs) 0 0;
+  font-size: var(--step-4);
+}
+
+.coverSubtitle {
+  max-width: 32rem;
+  margin-top: var(--space-s);
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: var(--step-1);
+  color: var(--slate-blue);
+}
+
+.byline {
+  color: var(--color-muted);
+}
+
+.downloadBtn {
+  margin-top: var(--space-m);
+}
+
+/* Welcome ------------------------------------------------------------------ */
+
+.welcome {
+  display: grid;
+  gap: var(--space-s);
+}
+
+.welcomeGreeting {
+  font-size: var(--step-3);
+  font-weight: 400;
+}
+
+.howtoTitle {
+  margin-top: var(--space-s);
+  font-size: var(--step-1);
+  color: var(--navy);
+}
+
+.howtoList {
+  display: grid;
+  gap: var(--space-xs);
+  margin: 0;
+  padding-left: 1.2em;
+  color: var(--charcoal);
+}
+
+.signoff {
+  font-family: var(--font-serif);
+  font-style: italic;
+  color: var(--slate-blue);
+}
+
+/* Day ------------------------------------------------------------------ */
+
+.day {
+  display: grid;
+  gap: var(--space-m);
+}
+
+.dayOf {
+  margin: 0;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--slate-blue);
+}
+
+.dayTheme {
+  margin: 0;
+  font-size: var(--step-4);
+}
+
+.dayLead {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: var(--step-1);
+  color: var(--slate-blue);
+}
+
+.privacyNote {
+  margin: 0;
+  font-size: 0.8rem;
+  color: var(--color-muted);
+}
+
+.dayQuestions {
+  display: grid;
+  gap: var(--space-l);
+  margin: var(--space-s) 0 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: question;
+}
+
+.dayQuestions li {
+  counter-increment: question;
+}
+
+.questionText {
+  margin: 0;
+  font-size: var(--step-0);
+  color: var(--charcoal);
+}
+
+.questionText::before {
+  content: counter(question) '. ';
+  font-weight: 600;
+  color: var(--slate-blue);
+}
+
+.promptRow {
+  margin-top: var(--space-s);
+  padding-top: var(--space-m);
+  border-top: 1px solid var(--color-rule);
+}
+
+.promptLabel {
+  display: block;
+  font-size: var(--step-1);
+  font-weight: 600;
+  color: var(--navy);
+}
+
+/* Closing ------------------------------------------------------------------- */
+
+.closing {
+  display: grid;
+  gap: var(--space-s);
+  text-align: center;
+  justify-items: center;
+}
+
+.closingTitle {
+  font-size: var(--step-3);
+  font-weight: 400;
+}
+
+.closingBullets {
+  display: grid;
+  gap: var(--space-2xs);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  text-align: left;
+}
+
+.keepGoingTitle {
+  margin-top: var(--space-s);
+  font-size: var(--step-1);
+  font-weight: 600;
+}
+
+.closingBullets li::before {
+  content: '— ';
+}
+
+.closingCtas {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-s);
+  margin-top: var(--space-s);
+}
+
+.shareNote {
+  margin-top: var(--space-m);
+}
+
+.disclaimer {
+  margin-top: var(--space-m);
+  font-size: 0.8rem;
+  opacity: 0.7;
+}
+
+/* Prev/next nav ------------------------------------------------------------ */
+
+/*
+ * Always two rows — Back/Next on their own row, page numbers on their own
+ * below. Letting all three share one row broke unpredictably at in-between
+ * widths (Next wrapping off alone while the numbers floated mid-line), so
+ * this doesn't depend on a breakpoint guess: it's the same, safe layout at
+ * every width.
+ */
+.nav {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-s);
+  padding-block: var(--space-l) var(--space-xl);
+}
+
+.navButtons {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  gap: var(--space-s);
+}
+
+.pageNumbers {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.35rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pageNumber,
+.pageNumberCurrent {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.9rem;
+  height: 1.9rem;
+  border-radius: 50%;
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+}
+
+.pageNumber {
+  color: var(--color-muted);
+  text-decoration: none;
+  transition:
+    background-color 0.2s var(--ease),
+    color 0.2s var(--ease);
+}
+
+.pageNumber:hover {
+  background: var(--tint-lavender);
+  color: var(--navy);
+}
+
+.pageNumberCurrent {
+  background: var(--navy);
+  color: var(--cream);
+  font-weight: 600;
+}

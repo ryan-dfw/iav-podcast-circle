@@ -93,6 +93,9 @@ export function AboutPage() {
               {podcastCopy.guest.cta}
             </ButtonLink>
             <JoinCircleButton variant="periwinkle" />
+            <ButtonLink to="/book-a-consultation" variant="blush">
+              Book a Consultation
+            </ButtonLink>
           </div>
           <p className={styles.contact}>
             Or write to me at <a href={mailto()}>{site.contact.email}</a>

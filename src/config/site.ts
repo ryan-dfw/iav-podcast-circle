@@ -43,8 +43,8 @@ export const site = {
       src: '/images/isha-vazquez-about.webp',
       thumb: { src: '/images/isha-vazquez-about_thumb.webp', width: 640 },
       alt: 'Portrait of Isha Vazquez, the host.',
-      width: 1600,
-      height: 2400,
+      width: 1080,
+      height: 1620,
     },
     signatureLine:
       'Discovering talented humans and preserving their gifts in a living time capsule, one conversation at a time.',
@@ -55,6 +55,22 @@ export const site = {
       alt: '',
       width: 733,
       height: 733,
+    },
+    /** Small author photo next to the byline on the Book page. */
+    bookPortrait: {
+      src: '/images/isha-vazquez-book.webp',
+      thumb: { src: '/images/isha-vazquez-book_thumb.webp', width: 240 },
+      alt: 'Isha Vazquez, the author.',
+      width: 480,
+      height: 720,
+    },
+    /** Portrait used in the bio section of the Book a Consultation page. */
+    bookingPortrait: {
+      src: '/images/isha-vazquez-booking.webp',
+      thumb: { src: '/images/isha-vazquez-booking_thumb.webp', width: 480 },
+      alt: 'Isha, Talent Amplifier, smiling and leaning on a table.',
+      width: 900,
+      height: 1350,
     },
   },
 

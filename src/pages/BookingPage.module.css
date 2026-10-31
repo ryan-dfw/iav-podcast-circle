@@ -1,0 +1,169 @@
+.intro {
+  padding-block: var(--space-xl) var(--space-l);
+  text-align: center;
+}
+
+.title {
+  max-width: 40rem;
+  margin: var(--space-xs) auto 0;
+  font-size: var(--step-4);
+}
+
+.greeting {
+  margin-top: var(--space-m);
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: var(--step-1);
+  color: var(--slate-blue);
+}
+
+.lead {
+  max-width: 38rem;
+  margin: var(--space-xs) auto 0;
+  color: var(--color-muted);
+}
+
+.sessions {
+  display: grid;
+  gap: var(--space-l);
+  padding-block: 0 var(--space-xl);
+}
+
+@media (min-width: 52rem) {
+  .sessions {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: start;
+  }
+}
+
+/* How it works -------------------------------------------------------- */
+
+.stepsWrap {
+  display: grid;
+  gap: var(--space-l);
+}
+
+.steps {
+  display: grid;
+  gap: var(--space-m);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.steps li {
+  display: flex;
+  gap: var(--space-s);
+  align-items: flex-start;
+}
+
+.stepNumber {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 50%;
+  background: var(--tint-lavender);
+  color: var(--navy);
+  font-family: var(--font-serif);
+  font-weight: 600;
+}
+
+.stepTitle {
+  font-weight: 600;
+  color: var(--navy);
+}
+
+.stepDescription {
+  margin-top: 0.2em;
+  color: var(--color-muted);
+}
+
+@media (min-width: 42rem) {
+  .steps {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-l) var(--space-xl);
+  }
+}
+
+/* Bio ------------------------------------------------------------------ */
+
+.bio {
+  display: grid;
+  gap: var(--space-l);
+  align-items: center;
+  justify-items: center;
+  text-align: center;
+}
+
+.bioPortrait {
+  margin: 0;
+  width: min(100%, 14rem);
+  aspect-ratio: 2 / 3;
+  overflow: hidden;
+  border-radius: var(--radius-l);
+  box-shadow: var(--shadow-soft);
+}
+
+.bioPortrait img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.bioText {
+  display: grid;
+  gap: var(--space-xs);
+  max-width: 34rem;
+}
+
+.bioGreeting {
+  font-size: var(--step-3);
+  font-weight: 400;
+}
+
+.bioParagraph {
+  color: var(--charcoal);
+}
+
+.bioSignoff {
+  margin-top: var(--space-xs);
+  font-family: var(--font-serif);
+  font-style: italic;
+  color: var(--slate-blue);
+}
+
+@media (min-width: 42rem) {
+  .bio {
+    grid-template-columns: auto 1fr;
+    justify-items: start;
+    text-align: left;
+  }
+}
+
+/* FAQ -------------------------------------------------------------------- */
+
+.faqWrap {
+  display: grid;
+  gap: var(--space-l);
+  padding-block: 0 var(--space-xl);
+}
+
+.faq {
+  display: grid;
+  gap: var(--space-m);
+  margin: 0;
+}
+
+.faq dt {
+  font-weight: 600;
+  color: var(--navy);
+}
+
+.faq dd {
+  margin: 0.3em 0 0;
+  color: var(--color-muted);
+}

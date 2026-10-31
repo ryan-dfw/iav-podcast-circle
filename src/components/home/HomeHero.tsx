@@ -1,12 +1,9 @@
-import { useId, useState, type FormEvent } from 'react';
+import { useId } from 'react';
 import { Link } from 'react-router-dom';
 import { homeCopy } from '@/content';
-import { isNewsletterConnected, subscribeToNewsletter } from '@/services/newsletter';
+import { useKitRequest } from '@/components/circleStarter/useKitRequest';
+import { ButtonLink } from '@/components/ui/Button';
 import styles from './HomeHero.module.css';
-
-const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-type Notice = { tone: 'ok' | 'info' | 'error'; text: string } | null;
 
 function Sparkle({ className }: { className: string }) {
   return (
@@ -19,35 +16,9 @@ function Sparkle({ className }: { className: string }) {
 /** Home page hero: headline, free-kit signup, portrait slot. Layout follows ex/Homepage-html. */
 export function HomeHero() {
   const { hero } = homeCopy;
-  const [email, setEmail] = useState('');
-  const [busy, setBusy] = useState(false);
-  const [notice, setNotice] = useState<Notice>(null);
+  const { email, setEmail, status, notice, submit } = useKitRequest();
   const inputId = useId();
   const noticeId = useId();
-
-  async function onSubmit(e: FormEvent) {
-    e.preventDefault();
-    if (!EMAIL_RE.test(email.trim())) {
-      setNotice({ tone: 'error', text: 'Please enter a valid email address.' });
-      return;
-    }
-    setBusy(true);
-    try {
-      const result = await subscribeToNewsletter({ email: email.trim(), source: 'home-hero' });
-      if (result.status === 'subscribed') {
-        setEmail('');
-        setNotice({ tone: 'ok', text: 'Thank you — you’re on the list.' });
-      } else if (result.status === 'not-connected') {
-        setNotice({ tone: 'info', text: 'Sample only — not implemented yet.' });
-      } else {
-        setNotice({ tone: 'error', text: result.message });
-      }
-    } catch {
-      setNotice({ tone: 'error', text: 'Something went wrong. Please try again.' });
-    } finally {
-      setBusy(false);
-    }
-  }
 
   return (
     <section className={styles.hero} aria-labelledby="home-title">
@@ -61,7 +32,7 @@ export function HomeHero() {
           </h1>
           <p className={styles.body}>{hero.body}</p>
 
-          <form className={styles.form} onSubmit={onSubmit} noValidate aria-label="Get the free Circle Starter">
+          <form className={styles.form} onSubmit={submit} noValidate aria-label="Get the free Circle Starter">
             <label htmlFor={inputId} className={styles.label}>
               {hero.starter.lead} <strong>{hero.starter.name}</strong> {hero.starter.note}
             </label>
@@ -74,28 +45,28 @@ export function HomeHero() {
                 autoComplete="email"
                 inputMode="email"
                 placeholder="Your email address"
-                required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                aria-invalid={notice?.tone === 'error'}
+                aria-invalid={status === 'error'}
                 aria-describedby={notice ? noticeId : undefined}
               />
-              <button
-                type="submit"
-                className={`${styles.submit} ${isNewsletterConnected() ? '' : 'unimplemented-x'}`}
-                disabled={busy}
-              >
-                {busy ? 'Sending…' : hero.starter.cta}
+              <button type="submit" className={styles.submit} disabled={status === 'sending'}>
+                {status === 'sending' ? 'Sending…' : hero.starter.cta}
               </button>
             </div>
-            <div id={noticeId} className={styles.notice} role="status" aria-live="polite" data-tone={notice?.tone}>
-              {notice?.text}
+            <div id={noticeId} className={styles.notice} role="status" aria-live="polite" data-tone={status}>
+              {notice}
             </div>
           </form>
 
-          <p className={styles.latest}>
-            <Link to="/podcast">{hero.latestStory}</Link>
-          </p>
+          <div className={styles.secondary}>
+            <ButtonLink to="/book-a-consultation" variant="light" className={styles.bookButton}>
+              {hero.bookConsultation}
+            </ButtonLink>
+            <p className={styles.latest}>
+              <Link to="/podcast">{hero.latestStory}</Link>
+            </p>
+          </div>
         </div>
 
         <div className={styles.portrait}>

@@ -10,6 +10,8 @@ import { ArticlesPage } from '@/pages/ArticlesPage';
 import { ArticlePage } from '@/pages/ArticlePage';
 import { QuotesPage } from '@/pages/QuotesPage';
 import { CirclePage } from '@/pages/CirclePage';
+import { BookingPage } from '@/pages/BookingPage';
+import { CircleStarterPage } from '@/pages/CircleStarterPage';
 import { NotFoundPage } from '@/pages/NotFoundPage';
 
 function RedirectEpisode() {
@@ -32,6 +34,9 @@ export function App() {
           <Route path="about" element={<AboutPage />} />
           <Route path="book" element={<BookPage />} />
           <Route path="circle" element={<CirclePage />} />
+          <Route path="book-a-consultation" element={<BookingPage />} />
+          <Route path="circle-starter" element={<Navigate to="/circle-starter/1" replace />} />
+          <Route path="circle-starter/:page" element={<CircleStarterPage />} />
 
           {/* Pages folded into the four main sections */}
           <Route path="stories" element={<Navigate to="/podcast" replace />} />
