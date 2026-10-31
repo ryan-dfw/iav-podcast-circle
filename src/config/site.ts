@@ -30,7 +30,7 @@ export const site = {
   tagline: 'Talent Amplified',
   subtagline: 'Where raw stories become legacy.',
   /** Production origin, used for canonical/OG URLs. */
-  url: 'https://iavpodcastcircle.com',
+  url: 'https://iavcircle.com',
   defaultDescription:
     'IAV Podcast Circle captures talented people in their raw, human state before the world meets them — preserving a human capsule through intimate podcast conversations.',
 

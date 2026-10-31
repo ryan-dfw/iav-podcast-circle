@@ -2,7 +2,7 @@ import type { Episode } from '../types';
 
 /**
  * Episode 01 — content recovered from the client's published Canva page
- * (https://iavpodcastcircle.com/episode01). Copy is kept as she published it.
+ * (her old Canva site, /episode01). Copy is kept as she published it.
  */
 export const episode01: Episode = {
   slug: 'episode-01',

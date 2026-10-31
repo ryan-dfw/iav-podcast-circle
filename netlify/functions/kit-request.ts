@@ -17,30 +17,35 @@ const json = (status: number, body: unknown) =>
 /**
  * Which host to put in the emailed link.
  *
- * At function runtime Netlify only guarantees URL, SITE_NAME and SITE_ID — and
- * URL is always the production address, so on a Deploy Preview it would email
- * links pointing at the live site instead of the preview being tested.
- * DEPLOY_PRIME_URL and CONTEXT aren't dependable here, so the request's own
- * origin is the honest answer. It's only trusted for hosts that could actually
- * be us, so a spoofed Host header can't redirect the link somewhere else.
+ * The host someone is actually browsing is the one host we know resolves and
+ * serves this site, so it wins. The configured URL is only a fallback: on a
+ * Deploy Preview Netlify reports the production address, and a custom domain
+ * can be set on the site long before its DNS exists — either way the link
+ * would point somewhere the reader can't reach.
+ *
+ * The origin is only trusted when it could plausibly be us, so a spoofed Host
+ * header can't turn the emailed link into someone else's domain.
  */
 function siteUrl(req: Request): string {
-  const explicit = process.env.SITE_URL;
-  if (explicit) return explicit.replace(/\/$/, '');
-
-  const canonical = (process.env.URL || '').replace(/\/$/, '');
+  const configured = (process.env.SITE_URL || process.env.URL || '').replace(/\/$/, '');
   const origin = new URL(req.url).origin;
-  const host = new URL(origin).hostname;
-  const canonicalHost = canonical ? new URL(canonical).hostname : '';
 
+  let configuredHost = '';
+  try {
+    configuredHost = configured ? new URL(configured).hostname : '';
+  } catch {
+    configuredHost = '';
+  }
+
+  const host = new URL(origin).hostname;
   const isOurs =
-    host === canonicalHost ||
+    (configuredHost !== '' && (host === configuredHost || host.endsWith(`.${configuredHost}`))) ||
     host.endsWith('.netlify.app') ||
     host === 'localhost' ||
     host === '127.0.0.1' ||
     host === '[::1]';
 
-  return isOurs ? origin : canonical || origin;
+  return isOurs ? origin : configured || origin;
 }
 
 export default async (req: Request): Promise<Response> => {

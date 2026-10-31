@@ -4,7 +4,7 @@
  * KIT_FROM_EMAIL decides the sending identity. Until a domain is verified in
  * Resend, the default `onboarding@resend.dev` ONLY delivers to the Resend
  * account owner's own address and 403s for everyone else — fine for local
- * testing, useless for real signups. Verifying iavpodcastcircle.com and
+ * testing, useless for real signups. Verifying iavcircle.com and
  * setting KIT_FROM_EMAIL to an address on it is the only change needed; no
  * code here cares which domain it is.
  */
