@@ -1,0 +1,30 @@
+.lines {
+  --line-height: 1.9rem;
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  min-height: calc(var(--line-height) * var(--min-rows, 3));
+  margin-top: 0.5em;
+  padding: 0;
+  border: none;
+  resize: none;
+  overflow: hidden;
+  background-image: linear-gradient(
+    to bottom,
+    transparent calc(var(--line-height) - 1px),
+    var(--color-rule) calc(var(--line-height) - 1px),
+    var(--color-rule) var(--line-height)
+  );
+  background-size: 100% var(--line-height);
+  background-repeat: repeat-y;
+  background-attachment: local;
+  line-height: var(--line-height);
+  font: inherit;
+  color: var(--charcoal);
+  outline: none;
+}
+
+.lines:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 4px;
+}

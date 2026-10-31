@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { mailto, site } from '@/config/site';
-import { primaryNav } from '@/content/navigation';
+import { footerExtraNav, primaryNav } from '@/content/navigation';
 import { PendingLink } from '@/components/ui/PendingLink';
 import styles from './SiteFooter.module.css';
 
@@ -16,7 +16,7 @@ export function SiteFooter() {
 
         <nav aria-label="Footer">
           <ul className={styles.links}>
-            {primaryNav.map((item) => (
+            {[...footerExtraNav, ...primaryNav].map((item) => (
               <li key={item.to}>
                 <Link to={item.to}>{item.label}</Link>
               </li>

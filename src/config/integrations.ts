@@ -7,12 +7,6 @@
  * they never have to be committed: copy `.env.example` to `.env.local`.
  */
 
-const env = import.meta.env;
-
-function optional(value: string | undefined): string | null {
-  return value && value.trim() ? value.trim() : null;
-}
-
 export const integrations = {
   youtube: {
     /** Channel whose newest videos feed the Podcast page (via the /api/youtube-feed proxy). */
@@ -34,12 +28,8 @@ export const integrations = {
   },
 
   circle: {
-    /**
-     * Where "Join the Circle" should go once membership is real (a checkout
-     * link, an application form, etc.). Until then the CTA opens an email to
-     * the client so interest isn't lost. No payments or accounts are built.
-     */
-    joinUrl: optional(env.VITE_CIRCLE_JOIN_URL),
+    /** Where "Join the Circle" goes — her Substack. */
+    joinUrl: 'https://iavcircle.substack.com/?r=9dbnah&utm_campaign=pub-share-checklist' as string | null,
   },
 
   events: {
