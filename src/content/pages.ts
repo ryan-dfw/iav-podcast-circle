@@ -22,12 +22,13 @@ export const homeCopy = {
       cta: 'Send me the free kit',
     },
     latestStory: 'or hear the latest story →',
+    bookConsultation: 'Book a Consultation',
     portrait: {
       src: '/images/isha-vazquez.webp',
       thumb: { src: '/images/isha-vazquez_thumb.webp', width: 640 },
       alt: 'Portrait of Isha Vazquez, the host.',
-      width: 1600,
-      height: 2400,
+      width: 1080,
+      height: 1620,
     },
   },
 };
@@ -149,8 +150,9 @@ export const bookSignupCopy = {
     { em: 'Talent Within' },
     ' is the story of the gift I’d overlooked for years, and an invitation to find yours.',
   ] as RichText,
-  prompt: 'Be the first to read the opening chapter.',
+  prompt: 'Get notified when the book is available.',
   emailLabel: 'Email for early chapters',
   placeholder: 'Your email address',
-  cta: 'Read it first',
+  cta: 'Notify me',
+  sent: 'You’re on the list. Thank you for being here early.',
 };

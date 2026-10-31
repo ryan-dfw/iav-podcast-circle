@@ -1,8 +1,7 @@
 import { bookCopy as book } from '@/content';
+import { site } from '@/config/site';
 import { usePageMeta } from '@/hooks/usePageMeta';
-import { SampleBadge } from '@/components/ui/Section';
 import { BookSignup } from '@/components/book/BookSignup';
-import { buttonClass } from '@/components/ui/Button';
 import styles from './BookPage.module.css';
 
 export function BookPage() {
@@ -28,17 +27,23 @@ export function BookPage() {
             {book.title}
           </h1>
           <p className={styles.subtitle}>{book.subtitle}</p>
-          <p className={styles.author}>By {book.author}</p>
+          <p className={styles.author}>
+            <img
+              className={styles.authorPhoto}
+              src={site.host.bookPortrait.src}
+              srcSet={`${site.host.bookPortrait.thumb.src} ${site.host.bookPortrait.thumb.width}w, ${site.host.bookPortrait.src} ${site.host.bookPortrait.width}w`}
+              sizes="2.5rem"
+              alt=""
+              width={site.host.bookPortrait.width}
+              height={site.host.bookPortrait.height}
+            />
+            By {book.author}
+          </p>
           {book.description.map((p) => (
             <p key={p} className={styles.description}>
               {p}
             </p>
           ))}
-          {book.detailsSample && (
-            <p>
-              <SampleBadge />
-            </p>
-          )}
           <dl className={styles.details}>
             {book.details.map((d) => (
               <div key={d.label}>
@@ -47,10 +52,6 @@ export function BookPage() {
               </div>
             ))}
           </dl>
-          {/* No purchase link yet — crossed out like the other unimplemented actions. */}
-          <button type="button" className={`${buttonClass('primary')} unimplemented-x`} aria-disabled="true">
-            {book.cta}
-          </button>
         </div>
       </section>
       <BookSignup />

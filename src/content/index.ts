@@ -17,6 +17,10 @@ import type { Article, CircleEvent, Episode, Quote, ResourceCategory, RichText }
 export * from './pages';
 export { circleIntro } from './circle';
 export { primaryNav } from './navigation';
+export { bookingCopy } from './booking';
+export type { BookingSession, BookingEmailLine } from './booking';
+export { circleStarterGate, circleStarterPdfUrl, buildCircleStarterPages } from './circleStarter';
+export type { CircleStarterContent, CircleStarterDay, CircleStarterPageData, KitIntent } from './circleStarter';
 export type * from './types';
 
 /* Episodes ---------------------------------------------------------- */

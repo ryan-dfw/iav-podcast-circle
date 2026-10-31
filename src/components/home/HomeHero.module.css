@@ -117,12 +117,16 @@
 }
 
 .submit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   min-height: 52px;
   padding: 0 26px;
   border: 0;
   border-radius: 6px;
   background: var(--blush);
   color: var(--navy);
+  text-decoration: none;
   font: inherit;
   font-size: 16px;
   font-weight: 500;
@@ -150,8 +154,22 @@
   color: var(--blush);
 }
 
+.secondary {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.bookButton {
+  min-height: 2.6rem;
+  padding: 0.55rem 1.3rem;
+  font-size: 15px;
+}
+
 .latest {
-  margin: 12px 0 0;
+  margin: 0;
   font-size: 15px;
 }
 

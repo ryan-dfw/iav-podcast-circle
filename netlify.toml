@@ -2,6 +2,13 @@
   command = "npm run build"
   publish = "dist"
 
+# The Circle Starter journal and its PDF are served by functions, never as
+# static files — see netlify/functions/kit-*.ts. The PDF rides along in the
+# bundle so it has no public URL of its own.
+[functions]
+  node_bundler = "esbuild"
+  included_files = ["netlify/assets/**"]
+
 # Same-origin proxy for the channel's RSS feed, Shorts excluded (browsers can't fetch it directly).
 # Keep the playlist_id in sync with src/config/integrations.ts and vite.config.ts.
 [[redirects]]
@@ -11,6 +18,7 @@
   force = true
 
 # Single-page app: serve index.html for every route (/podcast/episode-01, /episode01, …)
+# Functions declare their own /api/* paths and are matched before this.
 [[redirects]]
   from = "/*"
   to = "/index.html"
