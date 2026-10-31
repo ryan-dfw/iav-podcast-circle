@@ -8,7 +8,8 @@
  * asked for verified emails, not for whatever someone typed in a box.
  */
 import { issueToken, looksLikeEmail, normalizeEmail } from './_lib/token';
-import { sendKitLink } from './_lib/mail';
+import type { KitIntent } from '../../src/content/circleStarterTypes';
+import { notifyOwner, sendKitLink } from './_lib/mail';
 
 const json = (status: number, body: unknown) =>
   new Response(JSON.stringify(body), { status, headers: { 'Content-Type': 'application/json' } });
@@ -47,10 +48,12 @@ export default async (req: Request): Promise<Response> => {
 
   let email: unknown;
   let trap: unknown;
+  let intent: KitIntent = 'kit';
   try {
-    const body = (await req.json()) as { email?: unknown; website?: unknown };
+    const body = (await req.json()) as { email?: unknown; website?: unknown; intent?: unknown };
     email = body.email;
     trap = body.website;
+    if (body.intent === 'book') intent = 'book';
   } catch {
     return json(400, { error: 'bad_request' });
   }
@@ -63,9 +66,21 @@ export default async (req: Request): Promise<Response> => {
   }
 
   const address = normalizeEmail(email);
-  const link = `${siteUrl(req)}/circle-starter/1?t=${encodeURIComponent(issueToken(address))}`;
 
-  const sent = await sendKitLink(address, link);
+  // The book list has nothing to deliver yet, so there's no link to click and
+  // nothing for a round trip to prove — Isha just hears about it now. Only the
+  // kit, which hands over real content, is worth making someone verify.
+  if (intent === 'book') {
+    const told = await notifyOwner(address, 'book');
+    if (!told.ok) {
+      console.error('kit-request: notify failed', told.error);
+      return json(502, { error: 'send_failed' });
+    }
+    return json(200, { ok: true });
+  }
+
+  const token = encodeURIComponent(issueToken(address, intent));
+  const sent = await sendKitLink(address, `${siteUrl(req)}/circle-starter/1?t=${token}`);
   if (!sent.ok) {
     // Logged for us, generic for them — the visitor can't fix our mail config.
     console.error('kit-request: send failed', sent.error);

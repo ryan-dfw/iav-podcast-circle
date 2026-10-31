@@ -9,6 +9,8 @@
  * code here cares which domain it is.
  */
 
+import type { KitIntent } from '../../../src/content/circleStarterTypes';
+
 const ENDPOINT = 'https://api.resend.com/emails';
 
 export interface SendResult {
@@ -77,20 +79,31 @@ export function sendKitLink(to: string, link: string): Promise<SendResult> {
   return send({ to, subject, text, html });
 }
 
+/** What Isha sees in her inbox — the subject line carries the whole story. */
+const INTENT_PHRASE: Record<KitIntent, string> = {
+  kit: 'got the free kit',
+  book: 'wants the book',
+};
+
 /** Sent only once the address has proven itself, so this inbox stays clean. */
-export function notifyOwner(subscriber: string): Promise<SendResult> {
+export function notifyOwner(subscriber: string, intent: KitIntent = 'kit'): Promise<SendResult> {
   const to = process.env.KIT_NOTIFY_EMAIL;
   if (!to) return Promise.resolve({ ok: false, error: 'KIT_NOTIFY_EMAIL is not set' });
 
+  const line = `${subscriber} ${INTENT_PHRASE[intent]}`;
   const when = new Date().toISOString();
+  const note =
+    intent === 'kit'
+      ? 'Verified — they clicked the link we emailed, so this address receives mail.'
+      : 'Typed into the form on the book page. Not verified, so the address could contain a typo.';
+
   return send({
     to,
-    subject: `Circle Starter signup: ${subscriber}`,
-    text: `${subscriber}\n\nVerified (clicked the emailed link) at ${when}.`,
+    subject: line,
+    text: `${line}\n\n${note} ${when}`,
     html: shell(
-      `<h1 style="margin:0 0 16px;font-size:20px;font-weight:600;color:#0a1a2f">New Circle Starter signup</h1>
-<p style="margin:0 0 8px;font-size:18px"><strong>${subscriber}</strong></p>
-<p style="margin:0;font-size:14px;color:#4a5568">Verified — they clicked the link we emailed, so this address receives mail. ${when}</p>`,
+      `<h1 style="margin:0 0 16px;font-size:20px;font-weight:600;color:#0a1a2f">${line}</h1>
+<p style="margin:0;font-size:14px;color:#4a5568">${note} ${when}</p>`,
     ),
   });
 }

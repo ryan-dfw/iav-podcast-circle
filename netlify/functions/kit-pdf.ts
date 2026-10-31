@@ -42,7 +42,7 @@ async function loadPdf(): Promise<Uint8Array | null> {
 
 export default async (req: Request): Promise<Response> => {
   const token = new URL(req.url).searchParams.get('t');
-  if (!readToken(token)) {
+  if (readToken(token)?.k !== 'kit') {
     return new Response('This download link isn’t valid. Request a fresh one from the site.', {
       status: 401,
       headers: { 'Content-Type': 'text/plain; charset=utf-8' },

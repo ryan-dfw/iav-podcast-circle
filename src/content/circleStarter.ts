@@ -9,7 +9,7 @@
  */
 import type { CircleStarterContent, CircleStarterPageData } from './circleStarterTypes';
 
-export type { CircleStarterContent, CircleStarterDay, CircleStarterPageData } from './circleStarterTypes';
+export type { CircleStarterContent, CircleStarterDay, CircleStarterPageData, KitIntent } from './circleStarterTypes';
 
 /** Shown to anyone without a valid link — public on purpose. */
 export const circleStarterGate = {

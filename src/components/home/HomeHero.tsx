@@ -60,7 +60,7 @@ export function HomeHero() {
           </form>
 
           <div className={styles.secondary}>
-            <ButtonLink to="/book-a-consultation" variant="light" className={styles.bookButton}>
+            <ButtonLink to="/book-a-consultation" variant="primary" className={styles.bookButton}>
               {hero.bookConsultation}
             </ButtonLink>
             <p className={styles.latest}>

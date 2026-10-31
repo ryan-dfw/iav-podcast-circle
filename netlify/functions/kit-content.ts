@@ -25,7 +25,9 @@ export default async (req: Request): Promise<Response> => {
     return json(400, { error: 'bad_request' });
   }
 
-  if (!readToken(typeof token === 'string' ? token : null)) {
+  // Valid signature AND actually issued for the kit — a book confirmation
+  // link proves an inbox, but it isn't what the journal was handed out for.
+  if (readToken(typeof token === 'string' ? token : null)?.k !== 'kit') {
     return json(401, { error: 'invalid_token' });
   }
 

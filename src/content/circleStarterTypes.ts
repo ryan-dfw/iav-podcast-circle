@@ -8,6 +8,12 @@
  * would be a mistake: it would ship to every visitor.
  */
 
+/**
+ * Why someone handed over their email. Carried inside the signed token, so
+ * what Isha is told about a signup can't be faked by the page that sent it.
+ */
+export type KitIntent = 'kit' | 'book';
+
 export interface CircleStarterDay {
   number: number;
   theme: string;

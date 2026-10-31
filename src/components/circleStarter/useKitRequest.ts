@@ -1,5 +1,5 @@
 import { useState, type FormEvent } from 'react';
-import { circleStarterGate } from '@/content';
+import { circleStarterGate, type KitIntent } from '@/content';
 import { requestKitLink } from '@/services/kit';
 
 export type KitRequestStatus = 'idle' | 'sending' | 'sent' | 'error';
@@ -11,7 +11,7 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
  * screen. Only the logic is shared — each renders its own markup, because one
  * sits on the dark hero and the other on a light page.
  */
-export function useKitRequest() {
+export function useKitRequest(intent: KitIntent = 'kit', sentMessage: string = circleStarterGate.sent) {
   const [email, setEmail] = useState('');
   const [status, setStatus] = useState<KitRequestStatus>('idle');
   const [notice, setNotice] = useState('');
@@ -29,11 +29,11 @@ export function useKitRequest() {
 
     setStatus('sending');
     setNotice('');
-    const result = await requestKitLink(address);
+    const result = await requestKitLink(address, intent);
 
     if (result.status === 'sent') {
       setStatus('sent');
-      setNotice(circleStarterGate.sent);
+      setNotice(sentMessage);
       setEmail('');
     } else if (result.status === 'invalid-email') {
       setStatus('error');

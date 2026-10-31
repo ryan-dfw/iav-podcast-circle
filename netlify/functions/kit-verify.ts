@@ -29,13 +29,13 @@ export default async (req: Request): Promise<Response> => {
   const payload = readToken(typeof token === 'string' ? token : null);
   if (!payload) return json(401, { error: 'invalid_token' });
 
-  const notified = await notifyOwner(payload.e);
+  const notified = await notifyOwner(payload.e, payload.k);
   if (!notified.ok) {
     // The reader shouldn't be blocked because our notification failed.
     console.error('kit-verify: notify failed', notified.error);
   }
 
-  return json(200, { ok: true });
+  return json(200, { ok: true, intent: payload.k });
 };
 
 export const config = { path: '/api/kit-verify' };

@@ -1,45 +1,22 @@
-import { useId, useState, type FormEvent } from 'react';
+import { useId } from 'react';
 import { bookSignupCopy as copy } from '@/content';
-import { isNewsletterConnected, subscribeToNewsletter } from '@/services/newsletter';
+import { useKitRequest } from '@/components/circleStarter/useKitRequest';
 import { RichText } from '@/lib/RichText';
 import styles from './BookSignup.module.css';
 
-const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-type Notice = { tone: 'ok' | 'info' | 'error'; text: string } | null;
-
-/** Early-reader list signup. Goes through the newsletter service, so it stays inert until a provider is connected. */
+/**
+ * Early-reader list signup.
+ *
+ * Unlike the kit form, this one doesn't make anybody prove their inbox: there
+ * is no book to hand over yet, so there's nothing a round trip would protect.
+ * Submitting tells Isha straight away that this address wants the book, and
+ * she has said she'd rather have a possible typo than a missed reader.
+ */
 export function BookSignup() {
-  const [email, setEmail] = useState('');
-  const [busy, setBusy] = useState(false);
-  const [notice, setNotice] = useState<Notice>(null);
+  const { email, setEmail, status, notice, submit } = useKitRequest('book', copy.sent);
   const inputId = useId();
   const noticeId = useId();
   const titleId = useId();
-
-  async function onSubmit(e: FormEvent) {
-    e.preventDefault();
-    if (!EMAIL_RE.test(email.trim())) {
-      setNotice({ tone: 'error', text: 'Please enter a valid email address.' });
-      return;
-    }
-    setBusy(true);
-    try {
-      const result = await subscribeToNewsletter({ email: email.trim(), source: 'book-early-readers' });
-      if (result.status === 'subscribed') {
-        setEmail('');
-        setNotice({ tone: 'ok', text: 'Thank you — you’re on the list.' });
-      } else if (result.status === 'not-connected') {
-        setNotice({ tone: 'info', text: 'Sample only — not implemented yet.' });
-      } else {
-        setNotice({ tone: 'error', text: result.message });
-      }
-    } catch {
-      setNotice({ tone: 'error', text: 'Something went wrong. Please try again.' });
-    } finally {
-      setBusy(false);
-    }
-  }
 
   return (
     <section className={styles.section} aria-labelledby={titleId}>
@@ -53,35 +30,38 @@ export function BookSignup() {
         </p>
         <p className={styles.prompt}>{copy.prompt}</p>
 
-        <form className={styles.form} onSubmit={onSubmit} noValidate aria-label="Book early-reader list">
-          <label htmlFor={inputId} className="visually-hidden">
-            {copy.emailLabel}
-          </label>
-          <input
-            id={inputId}
-            className={styles.input}
-            type="email"
-            name="email"
-            autoComplete="email"
-            inputMode="email"
-            placeholder={copy.placeholder}
-            required
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            aria-invalid={notice?.tone === 'error'}
-            aria-describedby={notice ? noticeId : undefined}
-          />
-          <button
-            type="submit"
-            className={`${styles.submit} ${isNewsletterConnected() ? '' : 'unimplemented-x'}`}
-            disabled={busy}
-          >
-            {busy ? 'Sending…' : copy.cta}
-          </button>
-        </form>
-        <div id={noticeId} className={styles.notice} role="status" aria-live="polite" data-tone={notice?.tone}>
-          {notice?.text}
-        </div>
+        {status === 'sent' ? (
+          <div className={styles.notice} role="status" data-tone="sent">
+            {notice}
+          </div>
+        ) : (
+          <>
+            <form className={styles.form} onSubmit={submit} noValidate aria-label="Book early-reader list">
+              <label htmlFor={inputId} className="visually-hidden">
+                {copy.emailLabel}
+              </label>
+              <input
+                id={inputId}
+                className={styles.input}
+                type="email"
+                name="email"
+                autoComplete="email"
+                inputMode="email"
+                placeholder={copy.placeholder}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                aria-invalid={status === 'error'}
+                aria-describedby={notice ? noticeId : undefined}
+              />
+              <button type="submit" className={styles.submit} disabled={status === 'sending'}>
+                {status === 'sending' ? 'Sending…' : copy.cta}
+              </button>
+            </form>
+            <div id={noticeId} className={styles.notice} role="status" aria-live="polite" data-tone={status}>
+              {notice}
+            </div>
+          </>
+        )}
       </div>
     </section>
   );

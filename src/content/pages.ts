@@ -150,8 +150,9 @@ export const bookSignupCopy = {
     { em: 'Talent Within' },
     ' is the story of the gift I’d overlooked for years, and an invitation to find yours.',
   ] as RichText,
-  prompt: 'Be the first to read the opening chapter.',
+  prompt: 'Get notified when the book is available.',
   emailLabel: 'Email for early chapters',
   placeholder: 'Your email address',
-  cta: 'Read it first',
+  cta: 'Notify me',
+  sent: 'You’re on the list. Thank you for being here early.',
 };

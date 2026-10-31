@@ -12,12 +12,15 @@
  * which is the intended "revoke everything" lever.
  */
 import { createHmac, timingSafeEqual } from 'node:crypto';
+import type { KitIntent } from '../../../src/content/circleStarterTypes';
 
 export interface TokenPayload {
   /** Verified email address, normalized. */
   e: string;
   /** Issued-at, epoch ms — recorded for diagnostics, not enforced. */
   i: number;
+  /** What they asked for. Absent on tokens issued before intents existed. */
+  k: KitIntent;
 }
 
 const b64url = (buf: Buffer) => buf.toString('base64url');
@@ -42,8 +45,8 @@ export function looksLikeEmail(email: string): boolean {
   return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email) && email.length <= 254;
 }
 
-export function issueToken(email: string): string {
-  const payload = b64url(Buffer.from(JSON.stringify({ e: normalizeEmail(email), i: Date.now() })));
+export function issueToken(email: string, intent: KitIntent = 'kit'): string {
+  const payload = b64url(Buffer.from(JSON.stringify({ e: normalizeEmail(email), i: Date.now(), k: intent })));
   return `${payload}.${sign(payload)}`;
 }
 
@@ -66,7 +69,8 @@ export function readToken(token: string | null | undefined): TokenPayload | null
   try {
     const parsed = JSON.parse(Buffer.from(payload, 'base64url').toString('utf8')) as TokenPayload;
     if (typeof parsed?.e !== 'string' || !looksLikeEmail(parsed.e)) return null;
-    return parsed;
+    // Links already in inboxes predate intents — they were all for the kit.
+    return { ...parsed, k: parsed.k === 'book' ? 'book' : 'kit' };
   } catch {
     return null;
   }

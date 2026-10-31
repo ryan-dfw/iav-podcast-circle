@@ -6,10 +6,10 @@
  * and is handed to the functions on each request. There is no account and no
  * session; a valid signature is the only thing that opens anything.
  */
-import type { CircleStarterContent } from '@/content';
+import type { CircleStarterContent, KitIntent } from '@/content';
 
 const TOKEN_KEY = 'circle-starter:token';
-const VERIFIED_KEY = 'circle-starter:verified';
+const SEEN_KEY = 'circle-starter:verified';
 
 /* Token storage ------------------------------------------------------- */
 
@@ -32,17 +32,23 @@ export function storeToken(token: string): void {
 export function clearToken(): void {
   try {
     localStorage.removeItem(TOKEN_KEY);
-    localStorage.removeItem(VERIFIED_KEY);
+    localStorage.removeItem(SEEN_KEY);
   } catch {
     /* nothing to clean up */
   }
 }
 
-/** True the first time a given token is seen in this browser. */
+/**
+ * True the first time a given token is seen in this browser. Keeps a short
+ * list rather than one value, so confirming a book signup doesn't make an
+ * earlier kit token look new again (and re-notify Isha for it).
+ */
 function markVerified(token: string): boolean {
   try {
-    if (localStorage.getItem(VERIFIED_KEY) === token) return false;
-    localStorage.setItem(VERIFIED_KEY, token);
+    const raw = localStorage.getItem(SEEN_KEY);
+    const seen: string[] = raw ? (JSON.parse(raw) as string[]) : [];
+    if (seen.includes(token)) return false;
+    localStorage.setItem(SEEN_KEY, JSON.stringify([...seen, token].slice(-10)));
     return true;
   } catch {
     return true;
@@ -54,12 +60,12 @@ function markVerified(token: string): boolean {
 export type RequestResult = { status: 'sent' } | { status: 'invalid-email' } | { status: 'error' };
 
 /** Asks for a link to be emailed. Says nothing about whether it arrived. */
-export async function requestKitLink(email: string): Promise<RequestResult> {
+export async function requestKitLink(email: string, intent: KitIntent = 'kit'): Promise<RequestResult> {
   try {
     const res = await fetch('/api/kit-request', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, website: '' }),
+      body: JSON.stringify({ email, intent, website: '' }),
     });
     if (res.ok) return { status: 'sent' };
     if (res.status === 400) return { status: 'invalid-email' };

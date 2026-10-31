@@ -1,9 +1,7 @@
 import { bookCopy as book } from '@/content';
 import { site } from '@/config/site';
 import { usePageMeta } from '@/hooks/usePageMeta';
-import { SampleBadge } from '@/components/ui/Section';
 import { BookSignup } from '@/components/book/BookSignup';
-import { buttonClass } from '@/components/ui/Button';
 import styles from './BookPage.module.css';
 
 export function BookPage() {
@@ -46,11 +44,6 @@ export function BookPage() {
               {p}
             </p>
           ))}
-          {book.detailsSample && (
-            <p>
-              <SampleBadge />
-            </p>
-          )}
           <dl className={styles.details}>
             {book.details.map((d) => (
               <div key={d.label}>
@@ -59,10 +52,6 @@ export function BookPage() {
               </div>
             ))}
           </dl>
-          {/* No purchase link yet — crossed out like the other unimplemented actions. */}
-          <button type="button" className={`${buttonClass('primary')} unimplemented-x`} aria-disabled="true">
-            {book.cta}
-          </button>
         </div>
       </section>
       <BookSignup />
