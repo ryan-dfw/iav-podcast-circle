@@ -3,6 +3,10 @@
  * typography direction in her handoff. Change brand values here only.
  */
 :root {
+  /* Lets a height transition animate to `auto` (the booking FAQ accordion).
+     Ignored by browsers that don't support it — those just open instantly. */
+  interpolate-size: allow-keywords;
+
   /* Primary */
   --navy: #0a1a2f; /* Deep Midnight Navy */
   --blush: #f4c9d8; /* Soft Blush Pink */

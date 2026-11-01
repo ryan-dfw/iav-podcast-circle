@@ -17,6 +17,39 @@
   </head>
   <body>
     <div id="root"></div>
+
+    <!--
+      Netlify only registers a form it can find in static HTML at build time,
+      and this site renders its real form in React. This hidden copy exists so
+      the "speaking-request" form and its fields are known to Netlify; the
+      live form lives in src/pages/SpeakingRequestPage.tsx. Field names here
+      must match that form exactly, or submissions arrive with gaps.
+    -->
+    <form name="speaking-request" data-netlify="true" netlify-honeypot="bot-field" hidden>
+      <input type="hidden" name="form-name" value="speaking-request" />
+      <input name="bot-field" />
+      <input type="text" name="name" />
+      <input type="email" name="email" />
+      <input type="text" name="organization" />
+      <input type="text" name="role" />
+      <input type="tel" name="phone" />
+      <select name="referral"></select>
+      <input type="text" name="event_name" />
+      <select name="event_type"></select>
+      <input type="date" name="date_from" />
+      <input type="date" name="date_to" />
+      <input type="checkbox" name="dates_flexible" />
+      <input type="radio" name="location_type" />
+      <input type="text" name="city_state" />
+      <select name="audience_size"></select>
+      <select name="format"></select>
+      <input type="text" name="audience" />
+      <textarea name="desired_outcome"></textarea>
+      <select name="budget"></select>
+      <select name="travel"></select>
+      <input type="date" name="confirm_by" />
+      <textarea name="notes"></textarea>
+    </form>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

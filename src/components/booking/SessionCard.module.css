@@ -1,7 +1,7 @@
 .card {
-  display: grid;
+  display: flex;
+  flex-direction: column;
   gap: var(--space-xs);
-  align-content: start;
   padding: var(--space-l);
   background: var(--surface);
   border-radius: var(--radius-l);
@@ -50,15 +50,19 @@
 .meta {
   display: grid;
   gap: var(--space-xs);
-  margin: var(--space-s) 0 0;
+  margin-bottom: 0;
   padding-block: var(--space-s);
   border-block: 1px solid var(--color-rule);
 }
 
+/* Fixed label column so rows stay aligned — the speaking card's values run
+   long, and wrapping them as flex items left the labels ragged. */
+/* (.meta itself is the row after the 1fr spacer, so it's bottom-anchored.) */
 .meta div {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-s);
+  display: grid;
+  grid-template-columns: 5rem 1fr;
+  gap: var(--space-2xs) var(--space-s);
+  align-items: baseline;
 }
 
 .meta dt {
@@ -74,7 +78,14 @@
   font-weight: 600;
 }
 
+@supports not (grid-template-rows: subgrid) {
+  .meta {
+    margin-top: auto;
+  }
+}
+
 .cta {
+  align-self: flex-start;
   justify-self: start;
   margin-top: var(--space-xs);
 }

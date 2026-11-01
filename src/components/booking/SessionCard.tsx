@@ -5,7 +5,7 @@ import styles from './SessionCard.module.css';
 
 interface Props {
   session: BookingSession;
-  variant?: 'primary' | 'mauve';
+  variant?: 'primary' | 'mauve' | 'blush';
   headingLevel?: 2 | 3;
 }
 
@@ -37,18 +37,12 @@ export function SessionCard({ session, variant = 'primary', headingLevel = 2 }: 
         )}
       </p>
       <dl className={styles.meta}>
-        <div>
-          <dt>Length</dt>
-          <dd>{session.length}</dd>
-        </div>
-        <div>
-          <dt>Price</dt>
-          <dd>{session.price}</dd>
-        </div>
-        <div>
-          <dt>Format</dt>
-          <dd>{session.format}</dd>
-        </div>
+        {session.meta.map((m) => (
+          <div key={m.label}>
+            <dt>{m.label}</dt>
+            <dd>{m.value}</dd>
+          </div>
+        ))}
       </dl>
       <ButtonLink to={session.bookingUrl} variant={variant} className={styles.cta}>
         {session.cta}
