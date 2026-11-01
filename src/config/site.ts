@@ -16,7 +16,7 @@ export interface SocialLink {
 
 const socials: Array<Omit<SocialLink, 'url'> & { url?: string }> = [
   // Source: client email signature ("YouTube, Spotify & Linktree"); URL confirmed working.
-  { id: 'linktree', label: 'Linktree', url: 'https://linktr.ee/iavpodcastcircle' },
+  { id: 'linktree', label: 'Linktree', url: 'https://linktr.ee/iavcircle' },
   // TODO(client): channel / show URLs were not provided — add them to show the icons.
   { id: 'youtube', label: 'YouTube', url: undefined },
   { id: 'spotify', label: 'Spotify', url: undefined },
