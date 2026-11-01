@@ -23,7 +23,11 @@ export function BookingPage() {
 
       <div className={`container ${styles.sessions}`}>
         {sessions.map((session, i) => (
-          <SessionCard key={session.slug} session={session} variant={i === 0 ? 'primary' : 'mauve'} />
+          <SessionCard
+            key={session.slug}
+            session={session}
+            variant={i === 0 ? 'primary' : i === 1 ? 'mauve' : 'blush'}
+          />
         ))}
       </div>
 
@@ -74,24 +78,28 @@ export function BookingPage() {
       <Section tone="plain" labelledBy="booking-faq-title">
         <div className={`container-narrow ${styles.faqWrap}`}>
           <SectionHeading id="booking-faq-title" title={faq.title} subtitle={faq.lead} />
-          <dl className={styles.faq}>
+          {/* Native <details>, like the resources list — answers stay closed
+              until asked for, and the open/close is animated in CSS. */}
+          <div className={styles.faq}>
             {faq.items.map((item) => (
-              <div key={item.question}>
-                <dt>{item.question}</dt>
-                <dd>
-                  {typeof item.answer === 'string' ? (
-                    item.answer
-                  ) : (
-                    <>
-                      {item.answer.before}
-                      <a href={mailto()}>{site.contact.email}</a>
-                      {item.answer.after}
-                    </>
-                  )}
-                </dd>
-              </div>
+              <details key={item.question} className={styles.faqItem}>
+                <summary className={styles.faqQuestion}>{item.question}</summary>
+                <div className={styles.faqAnswer}>
+                  <p>
+                    {typeof item.answer === 'string' ? (
+                      item.answer
+                    ) : (
+                      <>
+                        {item.answer.before}
+                        <a href={mailto()}>{site.contact.email}</a>
+                        {item.answer.after}
+                      </>
+                    )}
+                  </p>
+                </div>
+              </details>
             ))}
-          </dl>
+          </div>
         </div>
       </Section>
     </>
