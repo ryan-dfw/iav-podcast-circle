@@ -26,13 +26,48 @@
 .sessions {
   display: grid;
   gap: var(--space-l);
-  padding-block: 0 var(--space-xl);
+  padding-block: 0;
 }
 
-@media (min-width: 52rem) {
+/* Straight from one column to three: at two columns the third card would sit
+   alone on its own row. */
+@media (min-width: 68rem) {
   .sessions {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    align-items: start;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  /*
+   * Tabular alignment. Each card hands its rows up to this grid via subgrid,
+   * so eyebrow, title, prompt, description, bullets, note, meta and button
+   * each sit on one shared line across all three cards — every row is as tall
+   * as the tallest card's version of it.
+   *
+   * 10 rows = SessionCard's eight children, with the meta list counted as the
+   * three rows it hands up rather than one. Add or remove a child there and
+   * this number has to follow, or the rows shift out of step.
+   *
+   * Where subgrid isn't supported the cards keep their own flex layout and
+   * only their bottom edges line up (see SessionCard.module.css).
+   */
+  @supports (grid-template-rows: subgrid) {
+    .sessions {
+      grid-template-rows: repeat(10, auto);
+    }
+
+    .sessions > * {
+      display: grid;
+      grid-row: span 10;
+      grid-template-rows: subgrid;
+      row-gap: var(--space-xs);
+    }
+
+    /* The meta list passes its own rows up as well, so Length/Price/Format
+       sit on the same lines as Audience/Format/Fee even when a value wraps. */
+    .sessions > * > dl {
+      grid-row: span 3;
+      grid-template-rows: subgrid;
+      row-gap: var(--space-xs);
+    }
   }
 }
 
@@ -149,21 +184,78 @@
 .faqWrap {
   display: grid;
   gap: var(--space-l);
-  padding-block: 0 var(--space-xl);
+  padding-block: 0;
 }
 
 .faq {
   display: grid;
-  gap: var(--space-m);
+  gap: 0;
+  margin: 0;
+  border-top: 1px solid var(--color-rule);
+}
+
+.faqItem {
+  border-bottom: 1px solid var(--color-rule);
+}
+
+.faqQuestion {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-s);
+  padding: var(--space-s) 0;
+  font-weight: 600;
+  color: var(--navy);
+  cursor: pointer;
+  list-style: none;
+}
+
+.faqQuestion::-webkit-details-marker {
+  display: none;
+}
+
+.faqQuestion::after {
+  content: '';
+  flex-shrink: 0;
+  width: 0.55rem;
+  height: 0.55rem;
+  margin-right: 0.2rem;
+  border-right: 2px solid var(--slate-blue);
+  border-bottom: 2px solid var(--slate-blue);
+  transform: rotate(45deg) translate(-0.15rem, -0.15rem);
+  transition: transform 0.25s var(--ease);
+}
+
+.faqItem[open] .faqQuestion::after {
+  transform: rotate(-135deg) translate(-0.2rem, -0.2rem);
+}
+
+.faqQuestion:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+.faqAnswer {
+  padding-bottom: var(--space-s);
+  color: var(--color-muted);
+}
+
+.faqAnswer p {
   margin: 0;
 }
 
-.faq dt {
-  font-weight: 600;
-  color: var(--navy);
-}
+/* The open/close slide. ::details-content is recent, so where it isn't
+   supported the panel simply appears instantly — the arrow still turns. */
+@supports selector(details::details-content) {
+  .faqItem::details-content {
+    block-size: 0;
+    overflow: hidden;
+    transition:
+      block-size 0.25s var(--ease),
+      content-visibility 0.25s allow-discrete;
+  }
 
-.faq dd {
-  margin: 0.3em 0 0;
-  color: var(--color-muted);
+  .faqItem[open]::details-content {
+    block-size: auto;
+  }
 }

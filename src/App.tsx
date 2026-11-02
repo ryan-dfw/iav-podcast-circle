@@ -11,6 +11,7 @@ import { ArticlePage } from '@/pages/ArticlePage';
 import { QuotesPage } from '@/pages/QuotesPage';
 import { CirclePage } from '@/pages/CirclePage';
 import { BookingPage } from '@/pages/BookingPage';
+import { SpeakingRequestPage } from '@/pages/SpeakingRequestPage';
 import { CircleStarterPage } from '@/pages/CircleStarterPage';
 import { NotFoundPage } from '@/pages/NotFoundPage';
 
@@ -35,6 +36,7 @@ export function App() {
           <Route path="book" element={<BookPage />} />
           <Route path="circle" element={<CirclePage />} />
           <Route path="book-a-consultation" element={<BookingPage />} />
+          <Route path="book-a-consultation/speaking" element={<SpeakingRequestPage />} />
           <Route path="circle-starter" element={<Navigate to="/circle-starter/1" replace />} />
           <Route path="circle-starter/:page" element={<CircleStarterPage />} />
 
