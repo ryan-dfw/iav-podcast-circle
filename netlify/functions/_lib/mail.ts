@@ -24,11 +24,17 @@ async function send(message: {
   subject: string;
   text: string;
   html: string;
+  /** Where a reply should land — the sending domain has no mailbox. */
+  replyTo?: string;
 }): Promise<SendResult> {
   const key = process.env.RESEND_API_KEY;
   if (!key) return { ok: false, error: 'RESEND_API_KEY is not set' };
 
-  const from = process.env.KIT_FROM_EMAIL || 'IAV Circle <onboarding@resend.dev>';
+  // No silent fallback to onboarding@resend.dev. That sender only reaches the
+  // Resend account owner, so falling back to it looks like success while every
+  // stranger's mail 403s — the exact failure that went unnoticed for days.
+  const from = process.env.KIT_FROM_EMAIL;
+  if (!from) return { ok: false, error: 'KIT_FROM_EMAIL is not set' };
 
   try {
     const res = await fetch(ENDPOINT, {
@@ -37,7 +43,14 @@ async function send(message: {
         Authorization: `Bearer ${key}`,
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ from, to: [message.to], subject: message.subject, text: message.text, html: message.html }),
+      body: JSON.stringify({
+        from,
+        to: [message.to],
+        subject: message.subject,
+        text: message.text,
+        html: message.html,
+        ...(message.replyTo ? { reply_to: message.replyTo } : {}),
+      }),
     });
 
     if (!res.ok) {
@@ -76,7 +89,7 @@ export function sendKitLink(to: string, link: string): Promise<SendResult> {
 <p style="margin:0 0 8px;font-size:14px;color:#4a5568">Keep this email — the same link brings you back to your journal any time, on any device.</p>
 <p style="margin:16px 0 0">— Isha</p>`);
 
-  return send({ to, subject, text, html });
+  return send({ to, subject, text, html, replyTo: process.env.KIT_NOTIFY_EMAIL });
 }
 
 /** What Isha sees in her inbox — the subject line carries the whole story. */
@@ -99,6 +112,7 @@ export function notifyOwner(subscriber: string, intent: KitIntent = 'kit'): Prom
 
   return send({
     to,
+    replyTo: subscriber,
     subject: line,
     text: `${line}\n\n${note} ${when}`,
     html: shell(
