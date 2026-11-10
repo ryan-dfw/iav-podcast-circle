@@ -52,6 +52,12 @@ Publishing writes to Firestore and asks Netlify to rebuild (`netlify/functions/c
 
 Rules deploy with `firebase deploy --only firestore:rules --project <id>`.
 
+What editors get: a list of articles and quotes; an article editor where the body is a list of blocks (paragraph, heading, pull quote, image, question, quote, remark, note, outline, sign-off) with Markdown paste; a quote editor with a live card preview; Save draft / Preview / Publish / Unpublish. Every publish keeps a copy under `revisions/` (no restore UI yet).
+
+- **Preview** opens the real page with `?preview=<slug>`; `src/studio/preview.ts` swaps the editor's saved draft in before the first render. Visitors and signed-out editors get the live page.
+- **Images** are resized in the browser (≤1600px plus a 640px thumbnail, WebP where supported), uploaded through `netlify/functions/cms-media.ts` into Netlify Blobs, and served from `/media/<content-hash>` by `netlify/functions/media.ts` with immutable caching. `prerender.mjs` reads them from Blobs for link-preview cards; outside a Netlify build that step is skipped with a warning.
+
+
 ## Running it locally
 
 ```sh

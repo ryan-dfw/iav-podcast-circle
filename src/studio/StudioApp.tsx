@@ -1,12 +1,13 @@
 /**
- * /studio — where Isha (and Ryan) manage published content.
+ * /studio — where Isha (and Ryan) write and publish articles and quotes.
  *
  * Unlinked, noindexed and lazily loaded; the real gate is Firestore rules,
  * which only let the listed editor accounts read or write anything but the
  * published copies. An account that signs in without being an editor gets a
  * permission error on its first read and is told so.
  */
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState, type ReactNode } from 'react';
+import { Link, Route, Routes, useParams } from 'react-router-dom';
 import { GoogleAuthProvider, onAuthStateChanged, signInWithPopup, signOut, type User } from 'firebase/auth';
 import { FirebaseError } from 'firebase/app';
 import { firebase, missingConfig, projectId } from './firebase';
@@ -22,6 +23,10 @@ import {
   type QuoteRecord,
 } from './data';
 import { requestRebuild, type RebuildResult } from './rebuild';
+import { StudioUser, useStudioUser as useUserFromContext } from './context';
+import { ArticleEditor } from './ArticleEditor';
+import { QuoteEditor } from './QuoteEditor';
+import { StatusTag, errorText, when } from './ui';
 import styles from './studio.module.css';
 
 function useStudioHead() {
@@ -97,7 +102,30 @@ function Authed() {
     );
   }
 
-  return <Dashboard user={user} />;
+  return (
+    <StudioUser.Provider value={user}>
+      <Shell user={user}>
+        <Routes>
+          <Route index element={<Dashboard />} />
+          <Route path="articles/new" element={<ArticleEditor key="new" />} />
+          <Route path="articles/:slug" element={<KeyedArticleEditor />} />
+          <Route path="quotes/new" element={<QuoteEditor key="new" />} />
+          <Route path="quotes/:number" element={<KeyedQuoteEditor />} />
+          <Route path="*" element={<Dashboard />} />
+        </Routes>
+      </Shell>
+    </StudioUser.Provider>
+  );
+}
+
+// Keyed by the address so moving between items starts each editor fresh.
+function KeyedArticleEditor() {
+  const { slug } = useParams();
+  return <ArticleEditor key={slug} />;
+}
+function KeyedQuoteEditor() {
+  const { number } = useParams();
+  return <QuoteEditor key={number} />;
 }
 
 type Load =
@@ -106,9 +134,8 @@ type Load =
   | { state: 'error'; message: string }
   | { state: 'ready'; articles: ArticleRecord[]; quotes: QuoteRecord[]; meta: PublishedMeta | null };
 
-function Dashboard({ user }: { user: User }) {
+function Dashboard() {
   const [load, setLoad] = useState<Load>({ state: 'loading' });
-  const [rebuild, setRebuild] = useState<RebuildResult | 'working' | null>(null);
 
   const refresh = useCallback(async () => {
     try {
@@ -116,7 +143,7 @@ function Dashboard({ user }: { user: User }) {
       setLoad({ state: 'ready', articles, quotes, meta });
     } catch (err) {
       if (err instanceof FirebaseError && err.code === 'permission-denied') setLoad({ state: 'denied' });
-      else setLoad({ state: 'error', message: err instanceof Error ? err.message : String(err) });
+      else setLoad({ state: 'error', message: errorText(err) });
     }
   }, []);
 
@@ -124,192 +151,199 @@ function Dashboard({ user }: { user: User }) {
     void refresh();
   }, [refresh]);
 
-  const doRebuild = async () => {
-    setRebuild('working');
-    setRebuild(await requestRebuild(user));
-  };
+  if (load.state === 'loading') return <p className={styles.muted}>Loading…</p>;
+
+  if (load.state === 'denied') {
+    return (
+      <section className={styles.panel}>
+        <h1 className={styles.h1}>No access</h1>
+        <p>This Google account isn’t an editor on this site. Sign out and use the editor account.</p>
+      </section>
+    );
+  }
+
+  if (load.state === 'error') {
+    return (
+      <section className={styles.panel}>
+        <h1 className={styles.h1}>Couldn’t load content</h1>
+        <p className={styles.error}>{load.message}</p>
+        <button type="button" className={styles.secondary} onClick={() => void refresh()}>
+          Try again
+        </button>
+      </section>
+    );
+  }
+
+  const setUp = Boolean(load.meta);
 
   return (
-    <Shell user={user}>
-      {load.state === 'loading' && <p className={styles.muted}>Loading…</p>}
-
-      {load.state === 'denied' && (
-        <section className={styles.panel}>
-          <h1 className={styles.h1}>No access</h1>
-          <p>{user.email} isn’t an editor on this site. Sign out and use the editor account.</p>
-        </section>
-      )}
-
-      {load.state === 'error' && (
-        <section className={styles.panel}>
-          <h1 className={styles.h1}>Couldn’t load content</h1>
-          <p className={styles.error}>{load.message}</p>
-          <button type="button" className={styles.secondary} onClick={() => void refresh()}>
-            Try again
-          </button>
-        </section>
-      )}
-
-      {load.state === 'ready' && (
+    <>
+      {setUp ? (
         <>
-          {!load.meta && (
-            <ImportPanel
-              user={user}
-              onDone={async () => {
-                await refresh();
-                await doRebuild();
-              }}
-            />
-          )}
-
           <section className={styles.panel} aria-labelledby="studio-articles">
-            <h2 id="studio-articles" className={styles.h2}>
-              Articles
-            </h2>
+            <div className={styles.panelHead}>
+              <h2 id="studio-articles" className={styles.h2}>
+                Articles
+              </h2>
+              <Link to="/studio/articles/new" className={styles.primary}>
+                New article
+              </Link>
+            </div>
             {load.articles.length === 0 ? (
-              <p className={styles.muted}>No articles in Studio yet.</p>
+              <p className={styles.muted}>No articles yet.</p>
             ) : (
-              <table className={styles.table}>
-                <thead>
-                  <tr>
-                    <th scope="col">Title</th>
-                    <th scope="col">Status</th>
-                    <th scope="col">Updated</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {load.articles.map((a) => (
-                    <tr key={a.slug}>
-                      <td>
-                        <span className={styles.title}>{a.draft.title}</span>
+              <ul className={styles.items}>
+                {load.articles.map((a) => (
+                  <li key={a.slug}>
+                    <Link to={`/studio/articles/${a.slug}`} className={styles.item}>
+                      <span className={styles.itemMain}>
+                        <span className={styles.title}>{a.draft.title || 'Untitled'}</span>
                         <span className={styles.slug}>/articles/{a.slug}</span>
-                      </td>
-                      <td>
-                        <StatusTag record={a} />
-                      </td>
-                      <td className={styles.muted}>{when(a.updatedAt?.toDate())}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            )}
-          </section>
-
-          <section className={styles.panel} aria-labelledby="studio-quotes">
-            <h2 id="studio-quotes" className={styles.h2}>
-              Quotes
-            </h2>
-            {load.quotes.length === 0 ? (
-              <p className={styles.muted}>No quotes in Studio yet.</p>
-            ) : (
-              <ul className={styles.list}>
-                {load.quotes.map((q) => (
-                  <li key={q.number}>
-                    <span className={styles.title}>
-                      No. {q.number} — {q.draft.beats.join(' ')}
-                    </span>{' '}
-                    <StatusTag record={q} />
+                      </span>
+                      <StatusTag record={a} />
+                      <span className={styles.itemWhen}>{when(a.updatedAt?.toDate())}</span>
+                    </Link>
                   </li>
                 ))}
               </ul>
             )}
           </section>
 
-          <section className={styles.panel} aria-labelledby="studio-rebuild">
-            <h2 id="studio-rebuild" className={styles.h2}>
-              Live site
-            </h2>
-            <p className={styles.muted}>
-              Published changes reach the site after a rebuild, which takes a minute or two.
-              {load.meta?.updatedAt && <> Last publish: {when(load.meta.updatedAt.toDate())}.</>}
-            </p>
-            <button type="button" className={styles.secondary} disabled={rebuild === 'working'} onClick={doRebuild}>
-              {rebuild === 'working' ? 'Requesting…' : 'Rebuild site'}
-            </button>
-            {rebuild && rebuild !== 'working' && (
-              <p className={rebuild.ok ? styles.muted : styles.error} role="status">
-                {rebuild.ok ? 'Rebuild started. The site updates when Netlify finishes.' : rebuild.message}
-              </p>
+          <section className={styles.panel} aria-labelledby="studio-quotes">
+            <div className={styles.panelHead}>
+              <h2 id="studio-quotes" className={styles.h2}>
+                Quotes
+              </h2>
+              <Link to="/studio/quotes/new" className={styles.primary}>
+                New quote
+              </Link>
+            </div>
+            {load.quotes.length === 0 ? (
+              <p className={styles.muted}>No quotes yet.</p>
+            ) : (
+              <ul className={styles.items}>
+                {load.quotes.map((q) => (
+                  <li key={q.number}>
+                    <Link to={`/studio/quotes/${q.number}`} className={styles.item}>
+                      <span className={styles.itemMain}>
+                        <span className={styles.title}>
+                          No. {q.number} — {q.draft.beats.join(' ') || 'Untitled'}
+                        </span>
+                      </span>
+                      <StatusTag record={q} />
+                      <span className={styles.itemWhen}>{when(q.updatedAt?.toDate())}</span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
             )}
           </section>
         </>
+      ) : (
+        <section className={`${styles.panel} ${styles.notice}`}>
+          <h2 className={styles.h2}>Not set up yet</h2>
+          <p>Studio needs a one-time setup by Ryan before articles can be written here.</p>
+        </section>
       )}
-    </Shell>
+
+      <DeveloperTools meta={load.meta} onImported={refresh} />
+    </>
   );
 }
 
-function ImportPanel({ user, onDone }: { user: User; onDone: () => Promise<void> }) {
-  const [step, setStep] = useState<'idle' | 'confirm' | 'working'>('idle');
-  const [error, setError] = useState('');
+/** Ryan's controls, folded away at the bottom. */
+function DeveloperTools({ meta, onImported }: { meta: PublishedMeta | null; onImported: () => Promise<void> }) {
+  const [rebuild, setRebuild] = useState<RebuildResult | 'working' | null>(null);
+  const [importStep, setImportStep] = useState<'idle' | 'confirm' | 'working'>('idle');
+  const [importError, setImportError] = useState('');
+  const user = useUserFromContext();
+
+  const doRebuild = async () => {
+    setRebuild('working');
+    setRebuild(await requestRebuild(user));
+  };
 
   return (
-    <section className={`${styles.panel} ${styles.notice}`} aria-labelledby="studio-import">
-      <h2 id="studio-import" className={styles.h2}>
-        Not managed here yet
-      </h2>
-      <p>
-        The site is building from the {bundledArticles.length} articles and {bundledQuotes.length} quote
-        {bundledQuotes.length === 1 ? '' : 's'} in its code. Import them to edit and publish them from Studio; they’re
-        copied as they are, so the site looks the same afterwards.
-      </p>
-      {step === 'idle' && (
-        <button type="button" className={styles.primary} onClick={() => setStep('confirm')}>
-          Import into Studio
-        </button>
-      )}
-      {step !== 'idle' && (
-        <div className={styles.row}>
-          <button
-            type="button"
-            className={styles.primary}
-            disabled={step === 'working'}
-            onClick={async () => {
-              setStep('working');
-              setError('');
-              try {
-                await importBundled(user.email ?? '');
-                await onDone();
-              } catch (err) {
-                setError(err instanceof Error ? err.message : String(err));
-                setStep('confirm');
-              }
-            }}
-          >
-            {step === 'working' ? 'Importing…' : 'Import and rebuild'}
-          </button>
-          <button type="button" className={styles.secondary} disabled={step === 'working'} onClick={() => setStep('idle')}>
-            Cancel
-          </button>
+    <details className={styles.devTools} open={!meta}>
+      <summary>Developer</summary>
+      <dl className={styles.facts}>
+        <dt>Firebase project</dt>
+        <dd className={styles.mono}>{projectId}</dd>
+        <dt>Last publish</dt>
+        <dd>
+          {meta?.updatedAt ? `${when(meta.updatedAt.toDate())}${meta.updatedBy ? ` by ${meta.updatedBy}` : ''}` : '—'}
+        </dd>
+        <dt>Built from Firestore</dt>
+        <dd>{meta?.managed?.length ? meta.managed.join(', ') : 'nothing yet (bundled content)'}</dd>
+      </dl>
+
+      {!meta && (
+        <div className={styles.devBlock}>
+          <p>
+            Import the {bundledArticles.length} bundled articles and {bundledQuotes.length} quote
+            {bundledQuotes.length === 1 ? '' : 's'} as published records, then rebuild. The site should look the same
+            afterwards.
+          </p>
+          {importStep === 'idle' ? (
+            <button type="button" className={styles.secondary} onClick={() => setImportStep('confirm')}>
+              Import bundled content…
+            </button>
+          ) : (
+            <div className={styles.row}>
+              <button
+                type="button"
+                className={styles.primary}
+                disabled={importStep === 'working'}
+                onClick={async () => {
+                  setImportStep('working');
+                  setImportError('');
+                  try {
+                    await importBundled(user.email ?? '');
+                    await onImported();
+                    await doRebuild();
+                  } catch (err) {
+                    setImportError(errorText(err));
+                    setImportStep('confirm');
+                  }
+                }}
+              >
+                {importStep === 'working' ? 'Importing…' : 'Import and rebuild'}
+              </button>
+              <button type="button" className={styles.quiet} disabled={importStep === 'working'} onClick={() => setImportStep('idle')}>
+                Cancel
+              </button>
+            </div>
+          )}
+          {importError && <p className={styles.error}>{importError}</p>}
         </div>
       )}
-      {error && <p className={styles.error}>{error}</p>}
-    </section>
+
+      <div className={styles.devBlock}>
+        <button type="button" className={styles.secondary} disabled={rebuild === 'working'} onClick={doRebuild}>
+          {rebuild === 'working' ? 'Requesting…' : 'Rebuild site'}
+        </button>
+        {rebuild && rebuild !== 'working' && (
+          <p className={rebuild.ok ? styles.muted : styles.error} role="status">
+            {rebuild.ok ? 'Rebuild requested.' : rebuild.message}
+          </p>
+        )}
+      </div>
+    </details>
   );
 }
 
-function StatusTag({ record }: { record: { status: string; draft: unknown; published: unknown } }) {
-  const unpublishedChanges =
-    record.status === 'published' && JSON.stringify(record.draft) !== JSON.stringify(record.published);
-  return (
-    <span className={`${styles.tag} ${record.status === 'published' ? styles.tagLive : ''}`}>
-      {record.status === 'published' ? 'Published' : 'Draft'}
-      {unpublishedChanges && ' · unpublished edits'}
-    </span>
-  );
-}
-
-function Shell({ user, children }: { user?: User; children?: React.ReactNode }) {
+function Shell({ user, children }: { user?: User; children?: ReactNode }) {
   return (
     <div className={styles.studio}>
       <header className={styles.bar}>
-        <span className={styles.brand}>
+        <Link to="/studio" className={styles.brand}>
           IAV Circle <span className={styles.muted}>Studio</span>
-        </span>
-        <span className={styles.project} title="Firebase project this deploy reads and writes">
-          {projectId}
-        </span>
+        </Link>
         {user && (
           <span className={styles.who}>
+            <a href="/" target="_blank" rel="noopener noreferrer" className={styles.link}>
+              View site
+            </a>
             <span className={styles.muted}>{user.email}</span>
             <button type="button" className={styles.link} onClick={() => void signOut(firebase().auth)}>
               Sign out
@@ -322,5 +356,3 @@ function Shell({ user, children }: { user?: User; children?: React.ReactNode }) 
   );
 }
 
-const when = (d?: Date) =>
-  d ? d.toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' }) : '—';

@@ -142,7 +142,7 @@ const SOCIAL_CARD = { width: 1200, height: 630 };
  */
 async function socialCardFrom(image, name, distDir, overlay) {
   try {
-    const source = await loadImage(join(root, 'public', image.src.replace(/^\//, '')));
+    const source = await loadImage(await imageSource(image.src));
     const { width, height } = SOCIAL_CARD;
     const canvas = createCanvas(width, height);
     const ctx = canvas.getContext('2d');
@@ -159,6 +159,19 @@ async function socialCardFrom(image, name, distDir, overlay) {
     console.warn(`prerender: could not build a social card for ${image.src} — ${error.message}`);
     return undefined;
   }
+}
+
+/**
+ * Bundled images live under public/. Images uploaded through Studio live in
+ * Netlify Blobs (served at /media/<key>), which a Netlify build can read
+ * directly; anywhere else that fails and the article simply gets no card.
+ */
+async function imageSource(src) {
+  if (!src.startsWith('/media/')) return join(root, 'public', src.replace(/^\//, ''));
+  const { getStore } = await import('@netlify/blobs');
+  const data = await getStore('media').get(src.slice('/media/'.length), { type: 'arrayBuffer' });
+  if (!data) throw new Error('not found in the media store');
+  return Buffer.from(data);
 }
 
 /** Wraps `text` to `maxWidth` at the context's current font. */
