@@ -9,6 +9,17 @@
   node_bundler = "esbuild"
   included_files = ["netlify/assets/**"]
 
+# Studio is unlinked; keep it out of search results too.
+[[headers]]
+  for = "/studio/*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
+
+[[headers]]
+  for = "/studio"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
+
 # Same-origin proxy for the channel's RSS feed, Shorts excluded (browsers can't fetch it directly).
 # Keep the playlist_id in sync with src/config/integrations.ts and vite.config.ts.
 [[redirects]]

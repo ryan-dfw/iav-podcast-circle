@@ -19,6 +19,7 @@ import { mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
+import { cmsSnapshotPath } from './cms-paths.mjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const dist = join(root, 'dist');
@@ -42,7 +43,7 @@ async function loadContent() {
     bundle: true,
     format: 'esm',
     platform: 'node',
-    alias: { '@': join(root, 'src') },
+    alias: { '@': join(root, 'src'), '@cms/snapshot': cmsSnapshotPath(root) },
     outfile,
     logLevel: 'warning',
   });

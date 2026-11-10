@@ -34,6 +34,24 @@ Design decisions worth naming, since they are choices and not oversights:
 
 Speaking requests go through Netlify Forms instead, deliberately: that path needs no sending domain of its own, so it works the moment it deploys. Netlify only registers a form it can see in static HTML at build time, so a hidden copy of the field names lives in `index.html` — change one and you must change both.
 
+## Studio (`/studio`)
+
+An unlinked editor for content the client manages herself. Sign-in is Google via Firebase Auth; Firestore rules (`firestore.rules`) are the actual gate — only the listed editor accounts can read or write anything except the published copies.
+
+Publishing writes to Firestore and asks Netlify to rebuild (`netlify/functions/cms-rebuild.ts`, which verifies the editor's ID token before calling the build hook). Before every build, `scripts/cms-snapshot.mjs` pulls the public `published/*` documents into `src/content/cms/snapshot.generated.json`, and the content accessors serve that instead of the bundled files for each collection it manages. Visitors never load Firebase; the site stays static.
+
+- Nothing configured, or nothing published yet → the bundled content under `src/content/` ships, unchanged.
+- Firestore unreachable or published data malformed → the build fails and Netlify keeps the previous deploy live. `npm run dev` only warns.
+- Two Firebase projects: dev (local + branch deploys) and prod (production context), selected by env vars per Netlify deploy context.
+
+| Variable | Purpose |
+| --- | --- |
+| `VITE_FIREBASE_API_KEY`, `VITE_FIREBASE_AUTH_DOMAIN`, `VITE_FIREBASE_PROJECT_ID`, `VITE_FIREBASE_APP_ID` | Firebase web config for this context's project. Not secret. |
+| `CMS_BUILD_HOOK_URL` | Build hook for this context's branch. |
+| `CMS_ADMIN_EMAILS` | Comma-separated editors allowed to trigger rebuilds. Keep in sync with `firestore.rules`. |
+
+Rules deploy with `firebase deploy --only firestore:rules --project <id>`.
+
 ## Running it locally
 
 ```sh
@@ -56,6 +74,6 @@ There is no fallback sender. If `KIT_FROM_EMAIL` is unset the send fails loudly,
 
 ## Stack
 
-React 19 · TypeScript · Vite · React Router · CSS Modules · Netlify Functions · Resend · Netlify Forms
+React 19 · TypeScript · Vite · React Router · CSS Modules · Netlify Functions · Resend · Netlify Forms · Firebase Auth + Firestore (Studio only)
 
-Static output with a prerender pass (`scripts/prerender.mjs`), no framework backend, no database. YouTube video and channel data are fetched live rather than hardcoded.
+Static output with a prerender pass (`scripts/prerender.mjs`), no framework backend, no runtime database — Studio content is read from Firestore at build time. YouTube video and channel data are fetched live rather than hardcoded.
