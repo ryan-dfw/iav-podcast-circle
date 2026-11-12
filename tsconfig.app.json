@@ -18,7 +18,8 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true,
     "baseUrl": ".",
-    "paths": { "@/*": ["src/*"] }
+    "resolveJsonModule": true,
+    "paths": { "@/*": ["src/*"], "@cms/snapshot": ["src/content/cms/snapshot.empty.json"] }
   },
   "include": ["src"]
 }

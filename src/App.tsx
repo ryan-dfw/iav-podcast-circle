@@ -1,3 +1,4 @@
+import { lazy, Suspense } from 'react';
 import { BrowserRouter, Navigate, Route, Routes, useParams } from 'react-router-dom';
 import { getLegacyRedirects } from '@/content';
 import { SiteLayout } from '@/components/layout/SiteLayout';
@@ -15,6 +16,9 @@ import { SpeakingRequestPage } from '@/pages/SpeakingRequestPage';
 import { CircleStarterPage } from '@/pages/CircleStarterPage';
 import { NotFoundPage } from '@/pages/NotFoundPage';
 
+// Editor-only, so it ships as its own chunk (with Firebase) that visitors never load.
+const StudioApp = lazy(() => import('@/studio/StudioApp'));
+
 function RedirectEpisode() {
   const { slug } = useParams();
   return <Navigate to={`/podcast/${slug}`} replace />;
@@ -24,6 +28,14 @@ export function App() {
   return (
     <BrowserRouter>
       <Routes>
+        <Route
+          path="studio/*"
+          element={
+            <Suspense fallback={null}>
+              <StudioApp />
+            </Suspense>
+          }
+        />
         <Route element={<SiteLayout />}>
           <Route index element={<HomePage />} />
           <Route path="podcast" element={<PodcastPage />} />

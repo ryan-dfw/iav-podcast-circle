@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import { fileURLToPath, URL } from 'node:url';
+import { cmsSnapshotPath } from './scripts/cms-paths.mjs';
 
 // Keep in sync with src/config/integrations.ts and netlify.toml.
 // UULF… is YouTube's auto-playlist of a channel's uploads excluding Shorts (UC… -> UULF…).
@@ -19,6 +20,10 @@ export default defineConfig({
     },
   },
   resolve: {
-    alias: { '@': fileURLToPath(new URL('./src', import.meta.url)) },
+    alias: {
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
+      // Published Studio content, or an empty stand-in — see src/content/cms/snapshot.ts.
+      '@cms/snapshot': cmsSnapshotPath(fileURLToPath(new URL('.', import.meta.url))),
+    },
   },
 });

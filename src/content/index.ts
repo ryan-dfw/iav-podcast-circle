@@ -11,6 +11,7 @@ import { resourceCategories } from './resources';
 import { events, memberBenefits, monthlyThemes } from './circle';
 import { articles } from './articles';
 import { quotes } from './quotes';
+import { cms, isManaged } from './cms/snapshot';
 import { padWithLipsum } from './quotes/lipsum';
 import type { Article, CircleEvent, Episode, Quote, ResourceCategory, RichText } from './types';
 
@@ -69,15 +70,21 @@ export function getUpcomingEvents(now: Date = new Date()): CircleEvent[] {
     .sort((a, b) => a.startsAt.localeCompare(b.startsAt));
 }
 
+/* Studio-managed collections --------------------------------------- */
+
+// Published from /studio when the snapshot manages them, bundled files otherwise.
+const articleSource = (): Article[] => (isManaged('articles') ? cms.articles : articles);
+const quoteSource = (): Quote[] => (isManaged('quotes') ? cms.quotes : quotes);
+
 /* Articles ---------------------------------------------------------- */
 
 /** All articles, newest first. */
 export function getArticles(): Article[] {
-  return [...articles].sort((a, b) => b.publishedOn.localeCompare(a.publishedOn));
+  return [...articleSource()].sort((a, b) => b.publishedOn.localeCompare(a.publishedOn));
 }
 
 export function getArticle(slug: string): Article | undefined {
-  return articles.find((a) => a.slug === slug);
+  return articleSource().find((a) => a.slug === slug);
 }
 
 export const articlePath = (a: Pick<Article, 'slug'>) => `/articles/${a.slug}`;
@@ -91,11 +98,11 @@ export const articlePath = (a: Pick<Article, 'slug'>) => `/articles/${a.slug}`;
  * count. Raise this again if the design needs exercising at full size before
  * she's written that many; padWithLipsum below still fills any shortfall.
  */
-export const QUOTES_WANTED = quotes.length;
+export const QUOTES_WANTED = quoteSource().length;
 
 /** All quotes, real ones (newest first) topped up with marked placeholders. */
 export function getQuotes(): Quote[] {
-  const real = [...quotes].sort((a, b) => b.number - a.number);
+  const real = [...quoteSource()].sort((a, b) => b.number - a.number);
   return padWithLipsum(real, QUOTES_WANTED);
 }
 

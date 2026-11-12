@@ -1,0 +1,188 @@
+/* Layout and type follow the client's "Gift Activation alignment" mockup;
+   colours are the site's tokens, not the mockup's hex values. */
+
+.band {
+  padding-block: clamp(4.5rem, 3rem + 5vw, 6.5rem);
+  background: var(--cream);
+}
+
+.white {
+  background: #fff;
+  border-top: 1px solid var(--color-rule);
+}
+
+.navy {
+  background: var(--navy);
+  color: var(--cream);
+}
+
+.navy h2,
+.navy h3 {
+  color: var(--cream);
+}
+
+.stack {
+  display: grid;
+  gap: var(--space-l);
+}
+
+.head {
+  display: grid;
+  gap: var(--space-s);
+  max-width: 47.5rem;
+}
+
+.eyebrow {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--slate-blue);
+}
+
+.onNavy {
+  color: var(--blush);
+  font-weight: 500;
+}
+
+.h2 {
+  font-size: clamp(2.25rem, 1.6rem + 2.6vw, 3.5rem);
+  line-height: 1.08;
+}
+
+.lede {
+  font-size: 1.125rem;
+  line-height: 1.6;
+  color: #dcdce6;
+  max-width: 38.75rem;
+}
+
+.body {
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  color: #3c4254;
+}
+
+.textLink {
+  font-weight: 600;
+  color: var(--slate-blue);
+}
+
+/* Who it's for */
+
+.cards {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+  gap: var(--space-m);
+}
+
+.card {
+  display: grid;
+  align-content: start;
+  gap: 0.75rem;
+  padding: 1.75rem;
+  background: #fff;
+  border: 1px solid var(--color-rule);
+  border-radius: 12px;
+}
+
+.number {
+  font-family: var(--font-serif);
+  font-size: 2rem;
+  line-height: 1;
+  color: var(--rose-mauve);
+}
+
+.cardText {
+  font-size: 1.0625rem;
+  line-height: 1.55;
+}
+
+.closing {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: clamp(1.6rem, 1.3rem + 1.2vw, 2.1rem);
+  line-height: 1.3;
+  color: var(--slate-blue);
+  max-width: 51rem;
+}
+
+/* Mission: copy beside the portrait */
+
+.split {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-xl);
+}
+
+.portrait {
+  flex: 1 1 20rem;
+  min-width: 0;
+  max-width: 27.5rem;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  object-position: top;
+  border-radius: 12px;
+}
+
+.missionCopy {
+  flex: 999 1 32rem;
+  min-width: 0;
+  display: grid;
+  gap: var(--space-m);
+}
+
+.statement {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: clamp(1.9rem, 1.5rem + 1.6vw, 2.75rem);
+  line-height: 1.2;
+  color: var(--navy);
+  text-wrap: balance;
+}
+
+.signature {
+  font-size: 0.95rem;
+  color: var(--color-muted);
+}
+
+/* Pillars */
+
+.pillars {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-bottom: 1px solid rgb(247 244 239 / 0.22);
+}
+
+.pillar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.5rem 2rem;
+  padding-block: 1.75rem;
+  border-top: 1px solid rgb(247 244 239 / 0.22);
+}
+
+.pillarNumber {
+  width: 3rem;
+  font-family: var(--font-serif);
+  font-size: 1.375rem;
+  color: var(--blush);
+}
+
+.pillarTitle {
+  flex: 1 1 17.5rem;
+  font-size: 1.875rem;
+}
+
+.pillarBody {
+  flex: 2 1 23.75rem;
+  font-size: 1.0625rem;
+  line-height: 1.55;
+  color: #dcdce6;
+}
