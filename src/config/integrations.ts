@@ -11,7 +11,7 @@ export const integrations = {
   youtube: {
     /** Channel whose newest videos feed the Podcast page (via the /api/youtube-feed proxy). */
     channelId: 'UCxfm6b5Y5mdn5vTh3fbRqcQ',
-    channelUrl: 'https://www.youtube.com/@letstalkforabit',
+    channelUrl: 'https://www.youtube.com/@letstalk_iavpodcastcircle',
   },
 
   spotify: {
