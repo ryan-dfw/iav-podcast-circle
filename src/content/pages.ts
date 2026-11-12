@@ -54,7 +54,7 @@ export const homeCopy = {
     // Her mockup opened this with the 25-years / Executive Director facts; those are already in the About bio.
     body: 'A season that asked everything of me taught me what I now teach: imposter syndrome isn’t a stop sign. It’s the halfway point between fear and courage — the signal that it’s time to decide.',
     signature: ['— Isha Vazquez, Talent Amplifier · Author of ', { em: 'Talent Within' }, ' (in progress)'] as RichText,
-    link: 'Read my story on the About page',
+    link: 'Read my story',
   },
 
   pillars: {
