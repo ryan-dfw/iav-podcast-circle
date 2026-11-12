@@ -10,11 +10,12 @@ import type { RichText } from './types';
 
 export const homeCopy = {
   // From the homepage design mockup (ex/Homepage-html).
+  // Hero eyebrow and body from her "Gift Activation alignment" home mockup (Nov 2026).
   hero: {
-    eyebrow: 'Let’s Talk for a Bit',
+    eyebrow: 'For the woman who has given everything',
     title: 'Your gift didn’t disappear.',
     titleAccent: 'Life just got loud.',
-    body: 'After 25 years leading teams in corporate America, I’m collecting the raw, real stories of everyday people who found their gift in their hardest seasons. It’s a human time capsule for a world being reshaped by AI. Your story belongs in it.',
+    body: 'What you’re looking for was never out there. It’s within you. I help women who’ve lost sight of themselves remember who they are, activate the gift they were born with, and move from fear to courage — one intentional step at a time.',
     starter: {
       lead: 'Start here:',
       name: 'The Circle Starter — 7 Days to Find Your Gift and Your People',
@@ -30,6 +31,43 @@ export const homeCopy = {
       width: 1080,
       height: 1620,
     },
+  },
+
+  /* Sections below the hero — copy from her "Gift Activation alignment" mockup (Nov 2026). */
+
+  forYou: {
+    eyebrow: 'Who this is for',
+    title: 'This is for you if…',
+    items: [
+      'You’re good at what you do — but the life you built doesn’t fit anymore.',
+      'You’re the strong one for everyone else, and quietly running on empty.',
+      'You used to know what you were good at. Now you’re not so sure.',
+      'Imposter syndrome is loud — and you’re wondering if it’s a sign to stop, or a sign to start.',
+    ],
+    closing: 'Nothing is missing. It’s been waiting within you the whole time.',
+  },
+
+  mission: {
+    eyebrow: 'My mission',
+    statement:
+      'To help women who’ve lost sight of themselves remember the gift within — and use it to move from fear to courage, into a life they live on purpose.',
+    // Her mockup opened this with the 25-years / Executive Director facts; those are already in the About bio.
+    body: 'A season that asked everything of me taught me what I now teach: imposter syndrome isn’t a stop sign. It’s the halfway point between fear and courage — the signal that it’s time to decide.',
+    signature: ['— Isha Vazquez, Talent Amplifier · Author of ', { em: 'Talent Within' }, ' (in progress)'] as RichText,
+    link: 'Read my story on the About page',
+  },
+
+  pillars: {
+    eyebrow: 'The path',
+    title: 'Gift Activation: 5 Pillars to Your Next Chapter',
+    subtitle: 'Like a butterfly in its chrysalis, the change happens within before anyone sees it.',
+    items: [
+      { title: 'The Tight Skin', body: 'When the old life stops fitting, imposter syndrome is the signal you’re meant for more.' },
+      { title: 'The Chrysalis', body: 'Break down to break through. Let go of the old story so the real one can surface.' },
+      { title: 'The Point of No Return', body: 'The moment you decide: “I’m going forward, no matter what.”' },
+      { title: 'The Separation', body: 'Clear the space, find the focus. Release what no longer belongs to the new you.' },
+      { title: 'Flight', body: 'Your gift is your joy. Now you live it on purpose.' },
+    ],
   },
 };
 
